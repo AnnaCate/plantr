@@ -1,0 +1,20 @@
+/* NavBar */
+
+.center-navbar-items {
+  flex-grow: 1;
+  justify-content: center;
+}
+
+#home-link {
+  margin-left: 1.5rem;
+}
+
+#flora-files {
+  font-family: 'Kristi', cursive;
+}
+
+/* SearchBar */
+
+#search-box {
+  width: 300px;
+}
