@@ -23,7 +23,7 @@ app.use(
 app.use(bodyParser.json());
 
 // Routing
-app.post('/', (req, res, next) => {
+app.post('/signup', (req, res, next) => {
   console.log('server post username: ');
   console.log(req.body.username);
   res.end();

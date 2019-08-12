@@ -15,7 +15,9 @@ const NavBar = props => {
       aria-label='main navigation'>
       <div className='navbar-brand'>
         <a className='navbar-item is-size-3' href='/'>
-          🍉
+          <span role='img' aria-label='watermelon emoji'>
+            🍉
+          </span>
           <span id='flora-files'>Flora Files</span>
         </a>
 
@@ -24,7 +26,6 @@ const NavBar = props => {
           className={`navbar-burger burger ${isActive}`}
           aria-label='menu'
           aria-expanded='false'
-          data-target='navbarBasicExample'
           onClick={hamburgerHelper}>
           <span aria-hidden='true' />
           <span aria-hidden='true' />
@@ -34,11 +35,11 @@ const NavBar = props => {
 
       <div className={`navbar-menu is-centered ${isActive}`}>
         <div className='navbar-start'>
-          <a id='home-link' className='navbar-item'>
+          {/* <Link to='/' className='navbar-item'>
             Home
-          </a>
+          </Link> */}
 
-          <a className='navbar-item'>About</a>
+          {/* <a className='navbar-item'>About</a> */}
         </div>
 
         <div className='navbar-end'>
@@ -47,7 +48,9 @@ const NavBar = props => {
               <Link to='/signup' className='button is-primary'>
                 <strong>Sign up</strong>
               </Link>
-              <a className='button is-light'>Log in</a>
+              <Link to='/login' className='button is-light'>
+                Log in
+              </Link>
             </div>
           </div>
         </div>

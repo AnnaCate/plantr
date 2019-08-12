@@ -26,32 +26,26 @@ const SignupForm = props => {
     console.log(user.confirmPassword);
 
     //request to server here
-    // axios
-    //   .post('http://localhost:8080/', {
-    //     username: user.username,
-    //     password: user.password,
-    //     email: user.email,
-    //   })
-
-    fetch('/', {
+    fetch('http://localhost:8080/signup', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(user),
     })
-      .then(response => response.json())
+      // .then(response => response.json())
       .then(response => {
         console.log(response);
-        // if (response) {
-        //   console.log('successful signup');
-        // navigate('/login');
-        // } else {
-        //   console.log('Signup error');
-        // }
-      })
-      .catch(err => {
-        console.log('Sign up server error: ');
-        console.log(err);
       });
+    // if (response) {
+    //   console.log('successful signup');
+    // navigate('/login');
+    // } else {
+    //   console.log('Signup error');
+    // }
+    // })
+    // .catch(err => {
+    //   console.log('Sign up server error: ');
+    //   console.log(err);
+    // });
   };
 
   const handleCancel = e => {
@@ -122,14 +116,14 @@ const SignupForm = props => {
 
           <div className='field is-grouped is-grouped-centered'>
             <div className='control'>
-              <a className='button is-primary' onClick={handleSubmit}>
+              <button className='button is-primary' onClick={handleSubmit}>
                 Submit
-              </a>
+              </button>
             </div>
             <div className='control'>
-              <a className='button is-text' onClick={handleCancel}>
+              <button className='button is-text' onClick={handleCancel}>
                 Cancel
-              </a>
+              </button>
             </div>
           </div>
         </div>

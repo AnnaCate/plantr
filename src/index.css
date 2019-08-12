@@ -5,12 +5,9 @@
   justify-content: center;
 }
 
-#home-link {
-  margin-left: 1.5rem;
-}
-
 #flora-files {
   font-family: 'Kristi', cursive;
+  margin-right: 1.5rem;
 }
 
 /* SearchBar */
