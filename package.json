@@ -5,20 +5,29 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"parcel src/index.html\" \"nodemon server/server.js\""
   },
   "author": "Anna Fulton",
   "license": "ISC",
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@types/reach__router": "^1.2.4",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
     "bulma": "^0.7.5",
     "core-js": "^3.1.4",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
+    "morgan": "^1.9.1",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.1.0"
   },
   "devDependencies": {
+    "concurrently": "^4.1.1",
     "parcel-bundler": "^1.12.3"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }

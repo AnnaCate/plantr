@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from '@reach/router';
 
 const NavBar = props => {
   const [isActive, setIsActive] = useState('');
@@ -43,9 +44,9 @@ const NavBar = props => {
         <div className='navbar-end'>
           <div className='navbar-item'>
             <div className='buttons'>
-              <a className='button is-primary'>
+              <Link to='/signup' className='button is-primary'>
                 <strong>Sign up</strong>
-              </a>
+              </Link>
               <a className='button is-light'>Log in</a>
             </div>
           </div>
