@@ -9,6 +9,15 @@ const SignupForm = props => {
     password: '',
     confirmPassword: '',
   });
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+  const checkPassword = () => {
+    if (user.password !== user.confirmPassword) {
+      setPasswordsMatch(false);
+    } else {
+      setPasswordsMatch(true);
+    }
+  };
 
   const handleChange = e => {
     setUser({
@@ -26,26 +35,25 @@ const SignupForm = props => {
     console.log(user.confirmPassword);
 
     //request to server here
-    fetch('http://localhost:8080/signup', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(user),
-    })
-      // .then(response => response.json())
+    axios
+      .post('/', {
+        username: user.username,
+        password: user.password,
+        email: user.email,
+      })
       .then(response => {
         console.log(response);
+        if (response.data) {
+          console.log('successful signup');
+          navigate('/login');
+        } else {
+          console.log('Signup error');
+        }
+      })
+      .catch(err => {
+        console.log('Sign up server error: ');
+        console.log(err);
       });
-    // if (response) {
-    //   console.log('successful signup');
-    // navigate('/login');
-    // } else {
-    //   console.log('Signup error');
-    // }
-    // })
-    // .catch(err => {
-    //   console.log('Sign up server error: ');
-    //   console.log(err);
-    // });
   };
 
   const handleCancel = e => {
@@ -110,8 +118,12 @@ const SignupForm = props => {
                 name='confirmPassword'
                 value={user.confirmPassword || ''}
                 onChange={handleChange}
+                onBlur={checkPassword}
               />
             </div>
+            <p className='help is-danger' hidden>
+              Passwords should match.
+            </p>
           </div>
 
           <div className='field is-grouped is-grouped-centered'>
