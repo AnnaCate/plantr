@@ -15,3 +15,9 @@
 #search-box {
   width: 300px;
 }
+
+/* Sign Up Form */
+
+.hidden {
+  display: none;
+}

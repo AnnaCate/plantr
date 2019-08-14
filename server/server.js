@@ -2,6 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const dbConnection = require('./database');
+const session = require('express-session');
+
+// route requires
+const user = require('./routes/user');
 
 const app = express();
 const PORT = 8080;
@@ -22,12 +27,22 @@ app.use(
 );
 app.use(bodyParser.json());
 
-// Routing
-app.post('/', (req, res, next) => {
-  console.log('server post username: ');
-  console.log(req.body.username);
-  res.end();
+// SESSIONS
+app.use(
+  session({
+    secret: 'baby-tiger',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use((req, res, next) => {
+  console.log('req.session', req.session);
+  next();
 });
+
+// routes
+app.use('/user', user);
 
 // Starting server
 app.listen(PORT, () => {
