@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const dbConnection = require('./database');
 const session = require('express-session');
+const passport = require('./passport');
 
 // route requires
 const user = require('./routes/user');
@@ -36,10 +37,9 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log('req.session', req.session);
-  next();
-});
+// PASSPORT
+app.use(passport.initialize);
+app.use(passport.session());
 
 // routes
 app.use('/user', user);
