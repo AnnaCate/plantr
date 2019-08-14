@@ -38,7 +38,7 @@ app.use(
 );
 
 // PASSPORT
-app.use(passport.initialize);
+app.use(passport.initialize());
 app.use(passport.session());
 
 // routes
