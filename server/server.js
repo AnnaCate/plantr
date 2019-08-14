@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const dbConnection = require('./database');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('./passport');
 
 // route requires
@@ -32,6 +33,7 @@ app.use(bodyParser.json());
 app.use(
   session({
     secret: 'baby-tiger',
+    store: new MongoStore({mongooseConnection: dbConnection}),
     resave: false,
     saveUninitialized: false,
   })
