@@ -29,7 +29,7 @@ const NavBar = props => {
 
   return (
     <nav
-      className='navbar is-primary'
+      className='navbar is-primary is-transparent'
       role='navigation'
       aria-label='main navigation'>
       <div className='navbar-brand'>
@@ -54,22 +54,20 @@ const NavBar = props => {
 
       <div className={`navbar-menu is-centered ${isActive}`}>
         <div className='navbar-start'>
-          {/* <Link to='/' className='navbar-item'>
-            Home
-          </Link> */}
+          <Link to='/about' className='navbar-item'>
+            About
+          </Link>
 
-          {/* <a className='navbar-item'>About</a> */}
-        </div>
-
-        <div className='navbar-end'>
           {props.currentUser.loggedIn && (
             <Link to='/your-garden' className='navbar-item'>
               <span role='img' aria-label='sunflower emoji'>
                 🌻
-              </span>
-              <strong>Your Garden</strong>
+              </span>{' '}
+              <span>{props.currentUser.username}'s Garden</span>
             </Link>
           )}
+        </div>
+        <div className='navbar-end'>
           <div className='navbar-item'>
             <div className='buttons'>
               {!props.currentUser.loggedIn && (

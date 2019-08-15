@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Router} from '@reach/router';
+import {Router, Redirect} from '@reach/router';
 import axios from 'axios';
 
 // import components
@@ -7,9 +7,10 @@ import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import SignupForm from './components/SignUp';
 import LogInForm from './components/LogIn';
-// About
+import About from './components/About';
 // PlantDetails
-// YourGarden
+import Garden from './components/Garden';
+import Footer from './components/Footer';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({loggedIn: false, username: null});
@@ -32,15 +33,45 @@ const App = () => {
     });
   };
 
+  // function to redirect user to log in if they try to access
+  // a protected component
+  const ProtectedRoute = ({component: Component, ...rest}) =>
+    currentUser.loggedIn ? (
+      <Component {...rest} />
+    ) : (
+      <Redirect from='' to='/login' noThrow />
+    );
+
+  // function to redirect user to homepage if they try to access
+  // the login or signup pages while already logged in
+  const RedirectRoute = ({component: Component, ...rest}) =>
+    !currentUser.loggedIn ? (
+      <Component {...rest} />
+    ) : (
+      <Redirect from='' to='/' noThrow />
+    );
+
   return (
-    <div>
+    <div id='site'>
       <NavBar updateUser={updateUser} currentUser={currentUser} />
-      {currentUser.loggedIn && <p>Join the party, {currentUser.username}!</p>}
-      <Router>
-        <HomePage path='/' />
-        <SignupForm path='/signup' />
-        <LogInForm path='/login' updateUser={updateUser} />
-      </Router>
+      <div id='site-content'>
+        <Router>
+          <HomePage path='/' />
+          <About path='/about' />
+          <RedirectRoute component={SignupForm} path='/signup' />
+          <RedirectRoute
+            component={LogInForm}
+            path='/login'
+            updateUser={updateUser}
+          />
+          <ProtectedRoute
+            component={Garden}
+            path='/your-garden'
+            currentUser={currentUser}
+          />
+        </Router>
+      </div>
+      <Footer />
     </div>
   );
 };

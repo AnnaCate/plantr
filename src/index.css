@@ -1,3 +1,13 @@
+#site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+#site-content {
+  flex: 1;
+}
+
 /* NavBar */
 
 .center-navbar-items {
@@ -16,8 +26,19 @@
   width: 300px;
 }
 
-/* Sign Up Form */
+/* Customization */
 
 .hidden {
   display: none;
+}
+
+.margin-bottom {
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+  padding: 1rem 1rem;
+  font-size: 0.85em;
+  overflow-x: hidden;
 }
