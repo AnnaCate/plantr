@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = props => {
   return (
-    <footer className='footer'>
+    <footer className='footer' id='footer'>
       <div className='content has-text-centered'>
         <p>
           Made with{' '}
@@ -10,7 +10,10 @@ const Footer = props => {
             ♥︎
           </span>{' '}
           by{' '}
-          <a href='http://www.github.com/annacate' target='_blank'>
+          <a
+            href='http://www.github.com/annacate'
+            target='_blank'
+            rel='noopener noreferrer'>
             Anna Fulton
           </a>
         </p>

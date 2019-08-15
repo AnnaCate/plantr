@@ -9,6 +9,7 @@ const NavBar = props => {
   const hamburgerHelper = e =>
     isActive ? setIsActive('') : setIsActive('is-active');
 
+  // log out function
   const logout = e => {
     e.preventDefault();
 
@@ -63,7 +64,7 @@ const NavBar = props => {
               <span role='img' aria-label='sunflower emoji'>
                 🌻
               </span>{' '}
-              <span>{props.currentUser.username}'s Garden</span>
+              <span>Your Garden</span>
             </Link>
           )}
         </div>

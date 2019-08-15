@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
-mongoose.promise = Promise; // why?
+mongoose.promise = Promise; // maybe don't need this?
 
 // define userSchema
 const userSchema = new Schema({

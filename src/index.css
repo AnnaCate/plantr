@@ -37,7 +37,8 @@
 }
 
 /* Footer */
-.footer {
+
+#footer {
   padding: 1rem 1rem;
   font-size: 0.85em;
   overflow-x: hidden;
