@@ -36,6 +36,20 @@
   margin-bottom: 1rem;
 }
 
+/* Home page card list */
+.image .cover {
+  object-fit: cover;
+}
+
+.plant-it {
+  color: #3273dc;
+  cursor: pointer;
+}
+
+.plant-it:hover {
+  color: #363636;
+}
+
 /* Footer */
 
 #footer {

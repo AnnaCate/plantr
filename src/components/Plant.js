@@ -1,12 +1,24 @@
 import React from 'react';
+import {Link} from '@reach/router';
 
-const Plant = props => {
+const Plant = ({plant}) => {
+  const handlePlantIt = plant => {
+    // get plant name, in cases where a qualifier is listed after a comma
+    const firstWord = plant.split(',').shift();
+    const verb = firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
+    alert(`${plant} ${verb} added to Your Garden!`);
+  };
+
   return (
-    <li key={props.plant._id} className='column is-one-quarter'>
+    <li key={plant._id} className='column is-one-quarter'>
       <div className='card'>
         <div className='card-image'>
           <figure className='image is-4by3'>
-            <img alt='img' src={require(`../images/${props.plant.images[0]}`)} />
+            <img
+              className='cover'
+              alt={`${plant.commonName}`}
+              src={require(`../images/${plant.images[0]}`)}
+            />
           </figure>
         </div>
 
@@ -14,7 +26,7 @@ const Plant = props => {
           <div className='level is-mobile'>
             <div className='level-left'>
               <div className='level-item has-text-centered'>
-                <p className='title is-5'>{props.plant.commonName}</p>
+                <p className='title is-5'>{plant.commonName}</p>
               </div>
             </div>
             <div className='level-right'>
@@ -31,12 +43,14 @@ const Plant = props => {
         </div>
 
         <footer className='card-footer'>
-          <a href='#' className='card-footer-item'>
+          <Link to={`/plants/:${plant._id}`} className='card-footer-item'>
             See Details
-          </a>
-          <a href='#' className='card-footer-item'>
+          </Link>
+          <p
+            className='card-footer-item plant-it'
+            onClick={() => handlePlantIt(plant.commonName)}>
             Plant it!
-          </a>
+          </p>
         </footer>
       </div>
     </li>

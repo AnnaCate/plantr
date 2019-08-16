@@ -6,7 +6,7 @@ const PlantList = props => {
     <div className='container'>
       <div className='columns is-multiline is-centered'>
         {props.allPlants.map(plant => (
-          <Plant plant={plant} />
+          <Plant plant={plant} key={plant._id} />
         ))}
       </div>
     </div>
