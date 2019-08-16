@@ -3,6 +3,10 @@ const titleCase = require('../utils/titleCase');
 
 const Modal = ({plant, handlePlantIt, toggleActive, isActive}) => {
   const getPlantCompanions = () => {
+    /** 🚨  
+     * Fix this on Monday
+     * Turn an array of strings into one long string with commmas
+    */
     if (!plant.companions) {
       return '';
     } else if (plant.companions.length === 1) {
