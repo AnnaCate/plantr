@@ -26,6 +26,10 @@
   width: 300px;
 }
 
+.no-bottom-padding {
+  padding-bottom: 0;
+}
+
 /* Customization */
 
 .hidden {
@@ -41,7 +45,7 @@
   object-fit: cover;
 }
 
-.plant-it {
+.card-footer-item {
   color: #3273dc;
   cursor: pointer;
 }

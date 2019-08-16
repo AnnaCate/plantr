@@ -9,21 +9,28 @@ const HomePage = props => {
   useEffect(() => getAllPlants(), []);
 
   const getAllPlants = () => {
-    axios.get('/plants').then(res => setAllPlants(res.data.data));
+    axios
+      .get('/plants')
+      .then(res => setAllPlants(res.data.data))
+      .catch(err => console.log(err));
   };
 
   return (
-    <section className='section'>
-      <div className='columns'>
-        <div className='column is-one-third' />
-        <div className='column is-one-third'>
-          <SearchBar />
+    <>
+      <section className='section no-bottom-padding'>
+        <div className='columns'>
+          <div className='column is-one-third' />
+          <div className='column is-one-third'>
+            <SearchBar />
+          </div>
+          <div className='column is-one-third' />
         </div>
-        <div className='column is-one-third' />
-      </div>
+      </section>
 
-      <PlantList allPlants={allPlants} />
-    </section>
+      <section className='section'>
+        <PlantList allPlants={allPlants} currentUser={props.currentUser} />
+      </section>
+    </>
   );
 };
 

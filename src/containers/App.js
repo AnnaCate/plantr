@@ -57,7 +57,7 @@ const App = () => {
       <NavBar updateUser={updateUser} currentUser={currentUser} />
       <div id='site-content'>
         <Router>
-          <HomePage path='/' />
+          <HomePage path='/' currentUser={currentUser} />
           <About path='/about' />
           <RedirectRoute component={SignupForm} path='/signup' />
           <RedirectRoute
