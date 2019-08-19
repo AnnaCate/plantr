@@ -10,6 +10,7 @@ const passport = require('./passport');
 // route requires
 const user = require('./routes/user');
 const plants = require('./routes/plants');
+const garden = require('./routes/garden');
 
 const app = express();
 const PORT = 8080;
@@ -47,6 +48,7 @@ app.use(passport.session());
 // routes
 app.use('/user', user);
 app.use('/plants', plants);
+app.use('/garden', garden);
 
 // Starting server
 app.listen(PORT, () => {

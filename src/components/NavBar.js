@@ -22,6 +22,7 @@ const NavBar = props => {
           props.updateUser({
             loggedIn: false,
             username: null,
+            _id: null,
           });
         }
       })
@@ -69,6 +70,9 @@ const NavBar = props => {
           )}
         </div>
         <div className='navbar-end'>
+          {props.currentUser.loggedIn && (
+            <div className='navbar-item'>Welcome, {props.currentUser.username}!</div>
+          )}
           <div className='navbar-item'>
             <div className='buttons'>
               {!props.currentUser.loggedIn && (

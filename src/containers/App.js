@@ -13,7 +13,11 @@ import Garden from './Garden';
 import Footer from '../components/Footer';
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState({loggedIn: false, username: null});
+  const [currentUser, setCurrentUser] = useState({
+    loggedIn: false,
+    username: null,
+    _id: null,
+  });
 
   // get logged in user when component mounts
   useEffect(() => getUser(), []);
@@ -26,10 +30,14 @@ const App = () => {
       console.log(response.data);
       if (response.data.user) {
         console.log('Get User: There is a user saved in the server session: ');
-        setCurrentUser({loggedIn: true, username: response.data.user.username});
+        setCurrentUser({
+          loggedIn: true,
+          username: response.data.user.username,
+          _id: response.data.user._id,
+        });
       } else {
         console.log('Get user: no user');
-        setCurrentUser({loggedIn: false, username: null});
+        setCurrentUser({loggedIn: false, username: null, _id: null});
       }
     });
   };

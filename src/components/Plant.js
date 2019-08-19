@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useImperativeHandle} from 'react';
 import Modal from './Modal';
+import axios from 'axios';
+import {navigate} from '@reach/router';
 
 const Plant = ({plant, currentUser}) => {
   const [isActive, setIsActive] = useState('');
@@ -7,14 +9,30 @@ const Plant = ({plant, currentUser}) => {
   // update `is-active` state for  modal
   const toggleActive = () => (isActive ? setIsActive('') : setIsActive('is-active'));
 
-  const handlePlantIt = plant => {
-    // get plant name, in cases where a qualifier is listed after a comma
-    const firstWord = plant.split(',').shift();
-    const verb = firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
-    const message = currentUser.loggedIn
-      ? `${plant} ${verb} added to Your Garden!`
-      : 'Please log in';
-    alert(message);
+  const handlePlantIt = (commonName, plantId, userId) => {
+    !currentUser.loggedIn
+      ? navigate('/login')
+      : axios
+          .post('/garden/', {
+            user: userId,
+            plant: plantId,
+          })
+          .then(response => {
+            console.log(response);
+            if (!response.data.error) {
+              // get plant name, in cases where a qualifier is listed after a comma
+              const firstWord = commonName.split(',').shift();
+              const verb =
+                firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
+              alert(`${commonName} ${verb} added to Your Garden!`);
+            } else {
+              alert(response.data.error);
+            }
+          })
+          .catch(err => {
+            console.log('Planting error: ');
+            console.log(err);
+          });
   };
 
   return (
@@ -57,7 +75,9 @@ const Plant = ({plant, currentUser}) => {
             </p>
             <p
               className='card-footer-item'
-              onClick={() => handlePlantIt(plant.commonName)}>
+              onClick={() =>
+                handlePlantIt(plant.commonName, plant._id, currentUser._id)
+              }>
               Plant it!
             </p>
           </footer>

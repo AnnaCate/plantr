@@ -35,12 +35,11 @@ const LogInForm = props => {
         password: user.password,
       })
       .then(response => {
-        console.log('login response: ');
-        console.log(response);
         if (response.status === 200) {
           props.updateUser({
             loggedIn: true,
             username: response.data.username,
+            _id: response.data._id,
           });
           navigate('/your-garden');
         }
