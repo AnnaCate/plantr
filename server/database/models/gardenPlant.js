@@ -5,8 +5,8 @@ mongoose.promise = Promise; // maybe don't need this?
 
 // define gardenPlantSchema
 const gardenPlantSchema = new Schema({
-  user: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  plant: [{type: Schema.Types.ObjectId, ref: 'Plant'}],
+  user: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  plant: [{type: mongoose.Schema.Types.ObjectId, ref: 'Plant'}],
   variety: String,
   dateStartedIndoors: Date,
   dateDirectSowed: Date,

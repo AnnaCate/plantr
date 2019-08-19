@@ -31,4 +31,13 @@ router.post('/', (req, res, next) => {
   });
 });
 
+// GET PLANTED PLANTS
+router.get('/:userId', (req, res, next) => {
+  GardenPlant.find({user: req.params.userId})
+    // .populate('plant')
+    .populate('plant')
+    .exec()
+    .then(plants => res.json({status: 'ok', data: plants}));
+});
+
 module.exports = router;

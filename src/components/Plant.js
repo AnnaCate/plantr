@@ -1,4 +1,4 @@
-import React, {useState, useImperativeHandle} from 'react';
+import React, {useState} from 'react';
 import Modal from './Modal';
 import axios from 'axios';
 import {navigate} from '@reach/router';
@@ -89,6 +89,7 @@ const Plant = ({plant, currentUser}) => {
         handlePlantIt={handlePlantIt}
         toggleActive={toggleActive}
         isActive={isActive}
+        currentUser={currentUser}
       />
     </>
   );
