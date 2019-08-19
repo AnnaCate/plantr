@@ -25,17 +25,29 @@ const Garden = ({currentUser}) => {
   return (
     <>
       <section className='section'>
-        {!plants && <div className='margin-bottom'>There's nothing here!</div>}
-        <div>
-          <Link to='/' className='button is-primary'>
-            {!plants && <span>Search plants</span>}
-            {plants && <span>Add more plants</span>}
-          </Link>
-        </div>
+        <GardenPlants
+          plants={plants}
+          currentUser={currentUser}
+          getPlants={getPlants}
+        />
       </section>
 
       <section className='section'>
-        {/* <GardenPlants plants={plants} currentUser={currentUser} /> */}
+        <div className='columns'>
+          <div className='column' />
+          <div className='column is-one-third has-text-centered'>
+            {plants.length === 0 && (
+              <div className='margin-bottom'>There's nothing here!</div>
+            )}
+            <div>
+              <Link to='/' className='button is-primary'>
+                {!plants && <span>Search plants</span>}
+                {plants && <span>Add more plants</span>}
+              </Link>
+            </div>
+          </div>
+          <div className='column' />
+        </div>
       </section>
     </>
   );

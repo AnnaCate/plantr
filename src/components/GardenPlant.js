@@ -3,28 +3,14 @@ import Modal from './Modal';
 import axios from 'axios';
 import {navigate} from '@reach/router';
 
-const GardenPlant = ({eachPlant, currentUser}) => {
-  const handleDelete = (commonName, plantId, userId) => {
+const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
+  const handleDelete = objectId => {
     axios
-      // update code below
-      .post('/garden/', {
-        user: userId,
-        plant: plantId,
-      })
-      .then(response => {
-        console.log(response);
-        if (!response.data.error) {
-          // get plant name, in cases where a qualifier is listed after a comma
-          const firstWord = commonName.split(',').shift();
-          const verb =
-            firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
-          alert(`${commonName} ${verb} added to Your Garden!`);
-        } else {
-          alert(response.data.error);
-        }
-      })
+      .delete(`/garden/${objectId}`)
+      .then(response => console.log(response))
+      .then(res => getPlants(currentUser._id))
       .catch(err => {
-        console.log('Planting error: ');
+        console.log('Delete error: ');
         console.log(err);
       });
   };
@@ -37,8 +23,8 @@ const GardenPlant = ({eachPlant, currentUser}) => {
             <figure className='image is-4by3'>
               <img
                 className='cover'
-                alt={`${eachPlant.plant.commonName}`}
-                src={require(`../images/${eachPlant.plant.images[0]}`)}
+                alt={`${eachPlant.plant[0].commonName}`}
+                src={require(`../images/${eachPlant.plant[0].images[0]}`)}
               />
             </figure>
           </div>
@@ -47,7 +33,7 @@ const GardenPlant = ({eachPlant, currentUser}) => {
             <div className='level is-mobile'>
               <div className='level-left'>
                 <div className='level-item has-text-centered'>
-                  <p className='title is-5'>{eachPlant.plant.commonName}</p>
+                  <p className='title is-5'>{eachPlant.plant[0].commonName}</p>
                 </div>
               </div>
               <div className='level-right'>
@@ -67,13 +53,7 @@ const GardenPlant = ({eachPlant, currentUser}) => {
             <p className='card-footer-item'>See/Edit Details</p>
             <p
               className='card-footer-item'
-              onClick={() =>
-                handleDelete(
-                  eachPlant.plant.commonName,
-                  eachPlant._id,
-                  currentUser._id
-                )
-              }>
+              onClick={() => handleDelete(eachPlant._id)}>
               Remove
             </p>
           </footer>

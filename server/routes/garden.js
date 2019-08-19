@@ -31,13 +31,18 @@ router.post('/', (req, res, next) => {
   });
 });
 
-// GET PLANTED PLANTS
+// GET GARDEN PLANTS
 router.get('/:userId', (req, res, next) => {
   GardenPlant.find({user: req.params.userId})
-    // .populate('plant')
     .populate('plant')
-    .exec()
     .then(plants => res.json({status: 'ok', data: plants}));
+});
+
+// DELETE PLANT FROM GARDEN
+router.delete('/:gardenPlantId', (req, response, next) => {
+  GardenPlant.findByIdAndDelete({_id: req.params.gardenPlantId}).then(res =>
+    response.json({status: 'ok', res: req.params.gardenPlantId})
+  );
 });
 
 module.exports = router;
