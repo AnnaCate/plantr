@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Link} from '@reach/router';
 import Modal from './Modal';
 
 const Plant = ({plant, currentUser}) => {

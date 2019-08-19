@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 const titleCase = require('../utils/titleCase');
 
 const Modal = ({plant, handlePlantIt, toggleActive, isActive}) => {
@@ -26,81 +26,80 @@ const Modal = ({plant, handlePlantIt, toggleActive, isActive}) => {
 
         <section className='modal-card-body'>
           <div className='modal-content'>
-            {/* <figure className='image is-4by3'>
-              <img
-                className='cover'
-                alt={`${plant.commonName}`}
-                src={require(`../images/${plant.images[0]}`)}
-              />
-            </figure> */}
-            <p>
-              <span className='subtitle is-5'>Sun: </span>
-              {titleCase(plant.sunHrs)}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Soil: </span>
-              {titleCase(plant.soil)}
-            </p>
-            <p>
-              <span className='subtitle is-5'>pH: </span>
-              {plant.minPh} - {plant.maxPh}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Plant next to: </span>
-              {convertArray(plant, 'companions')}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Don't plant next to: </span>
-              {convertArray(plant, 'enemies')}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Spacing between plants: </span>
-              {plant.spacingBtwnPlants_in} inches
-            </p>
-            <p>
-              <span className='subtitle is-5'>Spacing between rows: </span>
-              {plant.spacingBtwnPlants_in} inches
-            </p>
-            <p>
-              <span className='subtitle is-5'>Water: </span>
-              {titleCase(plant.water)}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Fertilizer: </span>
-              {plant.fertilizer}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Diseases: </span>
-              {convertArray(plant, 'diseases')}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Pests: </span>
-              {convertArray(plant, 'pests')}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Start seeds indoors: </span>
-              {titleCase(plant.startSeedsIndoors)}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Transplant: </span>
-              {titleCase(plant.transplant)}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Direct sow: </span>
-              {titleCase(plant.directSow)}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Days to germination: </span>
-              {plant.daysToGermination}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Days until harvest: </span>
-              {plant.daysToHarvest}
-            </p>
-            <p>
-              <span className='subtitle is-5'>Other tips: </span>
-              {titleCase(plant.otherCare)}
-            </p>
+            <table className='table'>
+              <tbody>
+                <tr>
+                  <th>Sun</th>
+                  <td>{titleCase(plant.sunHrs)}</td>
+                </tr>
+                <tr>
+                  <th>Soil</th>
+                  <td>{titleCase(plant.soil)}</td>
+                </tr>
+                <tr>
+                  <th>pH</th>
+                  <td>
+                    {plant.minPh} - {plant.maxPh}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Plant next to</th>
+                  <td>{convertArray(plant, 'companions')}</td>
+                </tr>
+                <tr>
+                  <th>Don't plant next to</th>
+                  <td>{convertArray(plant, 'enemies')}</td>
+                </tr>
+                <tr>
+                  <th>Spacing between plants</th>
+                  <td>{plant.spacingBtwnPlants_in} inches</td>
+                </tr>
+                <tr>
+                  <th>Spacing between rows</th>
+                  <td>{plant.spacingBtwnRows_in} inches</td>
+                </tr>
+                <tr>
+                  <th>Water</th>
+                  <td>{titleCase(plant.water)}</td>
+                </tr>
+                <tr>
+                  <th>Fertilizer</th>
+                  <td>{plant.fertilizer}</td>
+                </tr>
+                <tr>
+                  <th>Diseases</th>
+                  <td>{convertArray(plant, 'diseases')}</td>
+                </tr>
+                <tr>
+                  <th>Pests</th>
+                  <td>{convertArray(plant, 'pests')}</td>
+                </tr>
+                <tr>
+                  <th>Start seeds indoors</th>
+                  <td>{titleCase(plant.startSeedsIndoors)}</td>
+                </tr>
+                <tr>
+                  <th>Transplant</th>
+                  <td>{plant.transplant}</td>
+                </tr>
+                <tr>
+                  <th>Direct sow</th>
+                  <td>{titleCase(plant.directSow)}</td>
+                </tr>
+                <tr>
+                  <th>Days to germination</th>
+                  <td>{plant.daysToGermination}</td>
+                </tr>
+                <tr>
+                  <th>Days until harvest</th>
+                  <td>{plant.daysToHarvest}</td>
+                </tr>
+                <tr>
+                  <th>Other tips</th>
+                  <td>{plant.otherCare}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
