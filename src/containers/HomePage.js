@@ -2,9 +2,12 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import SearchBar from '../components/SearchBar';
 import PlantList from '../components/PlantList';
+import Pagination from '../components/Pagination';
 
 const HomePage = props => {
   const [allPlants, setAllPlants] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage] = useState(8);
 
   useEffect(() => getAllPlants(), []);
 
@@ -13,6 +16,18 @@ const HomePage = props => {
       .get('/plants')
       .then(res => setAllPlants(res.data.data))
       .catch(err => console.log(err));
+  };
+
+  /** 🚨 pagination code - needs refactoring
+   * Turn this into a function;
+   * Figure out how to sort `visibleCards` by `commonName`
+   */
+  const indexOfLastPlant = currentPage * cardsPerPage;
+  const indexOfFirstPlant = indexOfLastPlant - cardsPerPage;
+  const visibleCards = allPlants.slice(indexOfFirstPlant, indexOfLastPlant);
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -28,8 +43,13 @@ const HomePage = props => {
       </section>
 
       <section className='section'>
-        <PlantList allPlants={allPlants} currentUser={props.currentUser} />
+        <PlantList allPlants={visibleCards} currentUser={props.currentUser} />
       </section>
+      <Pagination
+        cardsPerPage={cardsPerPage}
+        allPlants={allPlants.length}
+        paginate={paginate}
+      />
     </>
   );
 };
