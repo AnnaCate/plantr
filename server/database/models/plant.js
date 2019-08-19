@@ -7,8 +7,6 @@ mongoose.promise = Promise; // maybe don't need this?
 const plantSchema = new Schema({
   commonName: {
     type: String,
-    required: true,
-    unique: true,
   },
   sunHrs: {
     type: String,

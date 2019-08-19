@@ -29,6 +29,12 @@ const Modal = ({plant, handlePlantIt, toggleActive, isActive}) => {
             <table className='table'>
               <tbody>
                 <tr>
+                  <th>Appropriate for USDA Hardiness Zones</th>
+                  <td>{`${plant.usdaHardinessZones[0]} - ${
+                    plant.usdaHardinessZones[plant.usdaHardinessZones.length - 1]
+                  }`}</td>
+                </tr>
+                <tr>
                   <th>Sun</th>
                   <td>{titleCase(plant.sunHrs)}</td>
                 </tr>
