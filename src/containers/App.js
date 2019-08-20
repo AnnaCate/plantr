@@ -8,7 +8,7 @@ import HomePage from './HomePage';
 import SignupForm from './SignUp';
 import LogInForm from './LogIn';
 import About from './About';
-// PlantDetails
+import PlantDetails from './PlantDetails';
 import Garden from './Garden';
 import Footer from '../components/Footer';
 
@@ -76,6 +76,11 @@ const App = () => {
           <ProtectedRoute
             component={Garden}
             path='/your-garden'
+            currentUser={currentUser}
+          />
+          <ProtectedRoute
+            component={PlantDetails}
+            path='/your-garden/:_id'
             currentUser={currentUser}
           />
         </Router>

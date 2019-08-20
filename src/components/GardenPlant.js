@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import {Link} from '@reach/router';
 import GardenModal from './GardenModal';
 import axios from 'axios';
-import {navigate} from '@reach/router';
 
 const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
   const [isActive, setIsActive] = useState('');
@@ -55,9 +55,11 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
           </div>
 
           <footer className='card-footer'>
-            <p className='card-footer-item' onClick={toggleActive}>
+            {/* <p className='card-footer-item' onClick={toggleActive}> */}
+            <Link to={`/your-garden/${eachPlant._id}`} className='card-footer-item'>
               See Details
-            </p>
+            </Link>
+            {/* </p> */}
             <p
               className='card-footer-item'
               onClick={() => handleDelete(eachPlant._id)}>

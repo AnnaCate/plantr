@@ -38,6 +38,13 @@ router.get('/:userId', (req, res, next) => {
     .then(plants => res.json({status: 'ok', data: plants}));
 });
 
+// GET GARDEN PLANT DETAILS
+router.get('/details/:gardenPlantId', (req, res, next) => {
+  GardenPlant.findById(req.params.gardenPlantId)
+    .populate('plant')
+    .then(plant => res.json({status: 'ok', data: plant}));
+});
+
 // DELETE PLANT FROM GARDEN
 router.delete('/:gardenPlantId', (req, response, next) => {
   GardenPlant.findByIdAndDelete({_id: req.params.gardenPlantId}).then(res =>
