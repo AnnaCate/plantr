@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
-import Modal from './Modal';
+import GardenModal from './GardenModal';
 import axios from 'axios';
 import {navigate} from '@reach/router';
 
 const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
+  const [isActive, setIsActive] = useState('');
+
+  // update `is-active` state for  modal
+  const toggleActive = () => (isActive ? setIsActive('') : setIsActive('is-active'));
+
   const handleDelete = objectId => {
     axios
       .delete(`/garden/${objectId}`)
@@ -50,7 +55,9 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
           </div>
 
           <footer className='card-footer'>
-            <p className='card-footer-item'>See/Edit Details</p>
+            <p className='card-footer-item' onClick={toggleActive}>
+              See Details
+            </p>
             <p
               className='card-footer-item'
               onClick={() => handleDelete(eachPlant._id)}>
@@ -60,13 +67,12 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
         </div>
       </li>
 
-      {/* <Modal
-        plant={plant}
+      <GardenModal
+        eachPlant={eachPlant}
         handleDelete={handleDelete}
         toggleActive={toggleActive}
         isActive={isActive}
-        currentUser={currentUser}
-      /> */}
+      />
     </>
   );
 };

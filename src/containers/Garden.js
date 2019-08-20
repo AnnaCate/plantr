@@ -20,7 +20,9 @@ const Garden = ({currentUser}) => {
       .catch(err => console.log(err));
   };
 
-  useEffect(() => getPlants(currentUser._id), []);
+  useEffect(() => {
+    getPlants(currentUser._id);
+  }, [currentUser._id]);
 
   return (
     <>
