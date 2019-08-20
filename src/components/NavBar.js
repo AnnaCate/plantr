@@ -42,7 +42,7 @@ const NavBar = props => {
           <span id='flora-files'>Flora Files</span>
         </a>
 
-        <a
+        <div
           role='button'
           className={`navbar-burger burger ${isActive}`}
           aria-label='menu'
@@ -51,7 +51,7 @@ const NavBar = props => {
           <span aria-hidden='true' />
           <span aria-hidden='true' />
           <span aria-hidden='true' />
-        </a>
+        </div>
       </div>
 
       <div className={`navbar-menu is-centered ${isActive}`}>

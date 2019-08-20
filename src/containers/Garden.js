@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {redirectTo, Link} from '@reach/router';
+import {Link} from '@reach/router';
 import axios from 'axios';
 import GardenPlants from '../components/GardenPlants';
 

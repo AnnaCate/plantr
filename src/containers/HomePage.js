@@ -6,29 +6,29 @@ import Pagination from '../components/Pagination';
 
 const HomePage = props => {
   const [allPlants, setAllPlants] = useState([]);
+  const [visiblePlants, setVisiblePlants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [cardsPerPage] = useState(8);
 
-  useEffect(() => getAllPlants(), []);
-
-  const getAllPlants = () => {
+  // GET plants from API
+  useEffect(() => {
     axios
       .get('/plants')
-      .then(res => setAllPlants(res.data.data))
+      .then(res => {
+        // set all plants in alphabetical order by commonName
+        setAllPlants(
+          res.data.data.sort((a, b) => (a.commonName > b.commonName ? 1 : -1))
+        );
+        return res.data.data;
+      })
+      // set first 8 plants as visiblePlants
+      .then(res => setVisiblePlants(res.slice(0, 8)))
       .catch(err => console.log(err));
-  };
+  }, []);
 
-  /** 🚨 pagination code - needs refactoring
-   * Turn this into a function;
-   * Figure out how to sort `visibleCards` by `commonName`
-   */
-  const indexOfLastPlant = currentPage * cardsPerPage;
-  const indexOfFirstPlant = indexOfLastPlant - cardsPerPage;
-  const visibleCards = allPlants.slice(indexOfFirstPlant, indexOfLastPlant);
-
-  const paginate = pageNumber => {
-    setCurrentPage(pageNumber);
-  };
+  // paginate plants, 8 per page, depending on currentPage
+  useEffect(() => {
+    setVisiblePlants(allPlants.slice((currentPage - 1) * 8, currentPage * 8));
+  }, [currentPage, allPlants]);
 
   return (
     <>
@@ -43,12 +43,12 @@ const HomePage = props => {
       </section>
 
       <section className='section'>
-        <PlantList allPlants={visibleCards} currentUser={props.currentUser} />
+        <PlantList plants={visiblePlants} currentUser={props.currentUser} />
       </section>
       <Pagination
-        cardsPerPage={cardsPerPage}
-        allPlants={allPlants.length}
-        paginate={paginate}
+        currentPage={currentPage}
+        allPlantsLength={allPlants.length}
+        setCurrentPage={setCurrentPage}
       />
     </>
   );

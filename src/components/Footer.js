@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Footer = props => {
+const Footer = () => {
   return (
-    <footer className='footer' id='footer'>
+    <footer className='footer margin-top' id='footer'>
       <div className='content has-text-centered'>
         <p>
           Made with{' '}
