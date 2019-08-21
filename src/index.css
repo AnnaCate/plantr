@@ -83,3 +83,7 @@
 .table input {
   width: 310;
 } */
+
+.table th {
+  width: 350px;
+}

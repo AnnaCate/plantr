@@ -18,9 +18,8 @@ const DetailsTable = ({plantInView}) => {
     }`;
   };
 
-  if (!plantInView) {
-    return <h1>Loading...</h1>;
-  }
+  if (!plantInView) return <h1>Loading...</h1>;
+
   return (
     <>
       <table className='table'>
@@ -48,20 +47,26 @@ const DetailsTable = ({plantInView}) => {
             </td>
           </tr>
           <tr>
-            <th>plantInView next to</th>
+            <th>Plant next to</th>
             <td>{convertArray(plantInView, 'companions')}</td>
           </tr>
           <tr>
-            <th>Don't plantInView next to</th>
+            <th>Don't plant next to</th>
             <td>{convertArray(plantInView, 'enemies')}</td>
           </tr>
           <tr>
-            <th>Spacing between plantInViews</th>
-            <td>{plantInView.spacingBtwnplantInViews_in} inches</td>
+            <th>Spacing between plants</th>
+            <td>
+              {plantInView.spacingBtwnPlants_in}{' '}
+              {plantInView.spacingBtwnPlants_in && 'inches'}
+            </td>
           </tr>
           <tr>
             <th>Spacing between rows</th>
-            <td>{plantInView.spacingBtwnRows_in} inches</td>
+            <td>
+              {plantInView.spacingBtwnRows_in}{' '}
+              {plantInView.spacingBtwnRows_in && 'inches'}
+            </td>
           </tr>
           <tr>
             <th>Water</th>
@@ -84,8 +89,8 @@ const DetailsTable = ({plantInView}) => {
             <td>{titleCase(plantInView.startSeedsIndoors)}</td>
           </tr>
           <tr>
-            <th>TransplantInView</th>
-            <td>{plantInView.transplantInView}</td>
+            <th>Transplant</th>
+            <td>{plantInView.transplant}</td>
           </tr>
           <tr>
             <th>Direct sow</th>
