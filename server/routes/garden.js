@@ -45,6 +45,22 @@ router.get('/details/:gardenPlantId', (req, res, next) => {
     .then(plant => res.json({status: 'ok', data: plant}));
 });
 
+// PUT GARDEN PLANT DETAILS
+router.put('/details/:gardenPlantId', (req, res, next) => {
+  GardenPlant.findById(req.params.gardenPlantId).then(plant => {
+    plant.variety = req.body.variety;
+    plant.dateStartedIndoors = req.body.dateStartedIndoors;
+    plant.dateDirectSowed = req.body.dateDirectSowed;
+    plant.numSeedsSowed = req.body.numSeedsSowed;
+    plant.numGerminated = req.body.numGerminated;
+    plant.dateTransplanted = req.body.dateTransplanted;
+    plant.numTransplanted = req.body.numTransplanted;
+    plant.observations = req.body.observations;
+    plant.save();
+    res.json({status: 'ok', data: plant});
+  });
+});
+
 // DELETE PLANT FROM GARDEN
 router.delete('/:gardenPlantId', (req, response, next) => {
   GardenPlant.findByIdAndDelete({_id: req.params.gardenPlantId}).then(res =>

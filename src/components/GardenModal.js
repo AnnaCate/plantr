@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import DetailsTable from './DetailsTable';
 
+/** 🚨DEPRECATED */
+
 const GardenModal = ({eachPlant, handleDelete, toggleActive, isActive}) => {
   const plant = eachPlant.plant[0];
 

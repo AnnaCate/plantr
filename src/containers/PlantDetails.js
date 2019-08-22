@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {Link} from '@reach/router';
 import axios from 'axios';
 import titleCase from '../utils/titleCase';
+import convertArray from '../utils/convertArray';
 
 const PlantDetails = ({_id, currentUser}) => {
   const [plantWithNotes, setPlantWithNotes] = useState({
     variety: '',
-    dateStartedIndoors: null,
-    dateDirectSowed: null,
-    numSeedsSowed: null,
-    numGerminated: null,
-    dateTransplanted: null,
-    numTransplanted: null,
+    dateStartedIndoors: '',
+    dateDirectSowed: '',
+    numSeedsSowed: '',
+    numGerminated: '',
+    dateTransplanted: '',
+    numTransplanted: '',
     observations: '',
   });
   const [plantInView, setPlantInView] = useState([]);
@@ -29,28 +30,30 @@ const PlantDetails = ({_id, currentUser}) => {
       .catch(err => console.log(err));
   }, []);
 
-  const convertArray = (obj, prop) => {
-    const array = obj[prop];
-    const conjunction = prop === 'enemies' ? 'or' : 'and';
-    if (!array) return '';
-    if (array.length === 1) return titleCase(array[0]);
-    if (array.length === 2)
-      return `${titleCase(array[0])} ${conjunction} ${array[1].toLowerCase()}`;
-    const middle = array
-      .slice(1, -1)
-      .map(item => item.toLowerCase())
-      .join(', ');
-    return `${titleCase(array[0])}, ${middle}, ${conjunction} ${
-      array[array.length - 1]
-    }`;
-  };
-
   const handleChange = e => {
     setPlantWithNotes({
       ...plantWithNotes,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
     console.log(plantWithNotes);
+    axios({
+      method: 'put',
+      url: `/garden/details/${_id}`,
+      data: {
+        variety: plantWithNotes.variety,
+        dateStartedIndoors: plantWithNotes.dateStartedIndoors,
+        dateDirectSowed: plantWithNotes.dateDirectSowed,
+        numSeedsSowed: plantWithNotes.numSeedsSowed,
+        numGerminated: plantWithNotes.numGerminated,
+        dateTransplanted: plantWithNotes.dateTransplanted,
+        numTransplanted: plantWithNotes.numTransplanted,
+        observations: plantWithNotes.observations,
+      },
+    }).then(res => console.log(res));
   };
 
   return (
@@ -173,7 +176,7 @@ const PlantDetails = ({_id, currentUser}) => {
                     <td>
                       <input
                         className='input'
-                        type='date'
+                        type='text'
                         name='dateStartedIndoors'
                         value={plantWithNotes.dateStartedIndoors || ''}
                         onChange={handleChange}
@@ -185,7 +188,7 @@ const PlantDetails = ({_id, currentUser}) => {
                     <td>
                       <input
                         className='input'
-                        type='date'
+                        type='text'
                         name='dateDirectSowed'
                         value={plantWithNotes.dateDirectSowed || ''}
                         onChange={handleChange}
@@ -195,35 +198,70 @@ const PlantDetails = ({_id, currentUser}) => {
                   <tr className='has-background-light'>
                     <th>Number of seeds sown:</th>
                     <td>
-                      <input className='input' type='number' />
+                      <input
+                        className='input'
+                        type='number'
+                        name='numSeedsSowed'
+                        value={plantWithNotes.numSeedsSowed || ''}
+                        onChange={handleChange}
+                      />
                     </td>
                   </tr>
                   <tr className='has-background-light'>
                     <th>Number of seeds that germinated:</th>
                     <td>
-                      <input className='input' type='number' />
+                      <input
+                        className='input'
+                        type='number'
+                        name='numGerminated'
+                        value={plantWithNotes.numGerminated || ''}
+                        onChange={handleChange}
+                      />
                     </td>
                   </tr>
                   <tr className='has-background-light'>
                     <th>Date transplanted:</th>
                     <td>
-                      <input className='input' type='date' />
+                      <input
+                        className='input'
+                        type='text'
+                        name='dateTransplanted'
+                        value={plantWithNotes.dateTransplanted || ''}
+                        onChange={handleChange}
+                      />
                     </td>
                   </tr>
                   <tr className='has-background-light'>
                     <th>Number of plants transplanted:</th>
                     <td>
-                      <input className='input' type='number' />
+                      <input
+                        className='input'
+                        type='number'
+                        name='numTransplanted'
+                        value={plantWithNotes.numTransplanted || ''}
+                        onChange={handleChange}
+                      />
                     </td>
                   </tr>
                   <tr className='has-background-light'>
                     <th>Other notes:</th>
                     <td>
-                      <textarea className='textarea' />
+                      <textarea
+                        className='textarea'
+                        name='observations'
+                        value={plantWithNotes.observations || ''}
+                        onChange={handleChange}
+                      />
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <input
+                className='button'
+                type='submit'
+                value='Submit input'
+                onClick={handleSubmit}
+              />
             </div>
           </div>
         </section>
