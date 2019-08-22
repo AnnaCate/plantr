@@ -1,23 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from '@reach/router';
-import GardenModal from './GardenModal';
 import axios from 'axios';
 
 const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
-  const [isActive, setIsActive] = useState('');
+  const handleDelete = (objectId, plantName) => {
+    const confirm = window.confirm(
+      `Are you sure you want to remove ${plantName} from your garden? All of your notes about it will be lost forever.`
+    );
 
-  // update `is-active` state for  modal
-  const toggleActive = () => (isActive ? setIsActive('') : setIsActive('is-active'));
-
-  const handleDelete = objectId => {
-    axios
-      .delete(`/garden/${objectId}`)
-      .then(response => console.log(response))
-      .then(res => getPlants(currentUser._id))
-      .catch(err => {
-        console.log('Delete error: ');
-        console.log(err);
-      });
+    if (confirm) {
+      axios
+        .delete(`/garden/${objectId}`)
+        .then(res => getPlants(currentUser._id))
+        .catch(err => {
+          console.log('Delete error: ');
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -55,26 +54,19 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
           </div>
 
           <footer className='card-footer'>
-            {/* <p className='card-footer-item' onClick={toggleActive}> */}
             <Link to={`/your-garden/${eachPlant._id}`} className='card-footer-item'>
               See Details
             </Link>
-            {/* </p> */}
             <p
               className='card-footer-item'
-              onClick={() => handleDelete(eachPlant._id)}>
+              onClick={() =>
+                handleDelete(eachPlant._id, eachPlant.plant[0].commonName)
+              }>
               Remove
             </p>
           </footer>
         </div>
       </li>
-
-      <GardenModal
-        eachPlant={eachPlant}
-        handleDelete={handleDelete}
-        toggleActive={toggleActive}
-        isActive={isActive}
-      />
     </>
   );
 };

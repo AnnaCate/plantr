@@ -1,20 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const SearchBar = props => {
+const SearchBar = ({
+  allPlants,
+  setVisiblePlants,
+  setSearchIsActive,
+  setCurrentPage,
+}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = value => {
+    const foundPlant = allPlants.filter(plant =>
+      plant.commonName.toLowerCase().includes(value.toLowerCase())
+    );
+    if (value.length === 0) {
+      setSearchIsActive(false);
+      setVisiblePlants(allPlants.slice(0, 8));
+      setCurrentPage(1);
+    } else {
+      setSearchIsActive(true);
+      setVisiblePlants(foundPlant);
+    }
+  };
+
+  const handleChange = e => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    handleSearch(value);
+  };
+
   return (
-    <div className='field is-grouped'>
-      <div className='control'>
-        <input
-          id='search-box'
-          className='input'
-          type='text'
-          placeholder='Search for a plant...'
-        />
-      </div>
-      <div className='control'>
-        <button className='button is-primary'>Search</button>
-      </div>
-    </div>
+    <input
+      id='search-box'
+      className='input'
+      type='text'
+      placeholder='Search for a plant...'
+      value={searchTerm || ''}
+      onChange={handleChange}
+    />
   );
 };
 

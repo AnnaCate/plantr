@@ -26,8 +26,6 @@ const LogInForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log('LogInForm handleSubmit');
-
     // POST request to server
     axios
       .post('/user/login', {

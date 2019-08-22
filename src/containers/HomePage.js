@@ -8,6 +8,7 @@ const HomePage = props => {
   const [allPlants, setAllPlants] = useState([]);
   const [visiblePlants, setVisiblePlants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchIsActive, setSearchIsActive] = useState(false);
 
   // GET plants from API
   useEffect(() => {
@@ -35,8 +36,13 @@ const HomePage = props => {
       <section className='section no-bottom-padding'>
         <div className='columns'>
           <div className='column is-one-third' />
-          <div className='column is-one-third'>
-            <SearchBar />
+          <div className='column is-one-third has-text-centered'>
+            <SearchBar
+              allPlants={allPlants}
+              setVisiblePlants={setVisiblePlants}
+              setSearchIsActive={setSearchIsActive}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
           <div className='column is-one-third' />
         </div>
@@ -45,11 +51,13 @@ const HomePage = props => {
       <section className='section'>
         <PlantList plants={visiblePlants} currentUser={props.currentUser} />
       </section>
-      <Pagination
-        currentPage={currentPage}
-        allPlantsLength={allPlants.length}
-        setCurrentPage={setCurrentPage}
-      />
+      {!searchIsActive && (
+        <Pagination
+          currentPage={currentPage}
+          allPlantsLength={allPlants.length}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </>
   );
 };

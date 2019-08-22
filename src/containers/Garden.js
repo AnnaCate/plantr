@@ -10,11 +10,8 @@ const Garden = ({currentUser}) => {
     axios
       .get(`/garden/${userId}`)
       .then(res => {
-        console.log(res);
         if (res.status === 200 && res.data.data) {
           setPlants(res.data.data);
-        } else {
-          console.log('Nothing planted yet');
         }
       })
       .catch(err => console.log(err));
@@ -34,25 +31,27 @@ const Garden = ({currentUser}) => {
         </div>
       </header>
 
-      <section className='section'>
-        <GardenPlants
-          plants={plants}
-          currentUser={currentUser}
-          getPlants={getPlants}
-        />
+      <section className='section has-text-centered'>
+        {plants.length === 0 && (
+          <div className='margin-bottom'>There's nothing here!</div>
+        )}
+        {plants.length > 0 && (
+          <GardenPlants
+            plants={plants}
+            currentUser={currentUser}
+            getPlants={getPlants}
+          />
+        )}
       </section>
 
       <section className='section'>
         <div className='columns'>
           <div className='column' />
           <div className='column is-one-third has-text-centered'>
-            {plants.length === 0 && (
-              <div className='margin-bottom'>There's nothing here!</div>
-            )}
             <div>
               <Link to='/' className='button is-primary'>
                 {!plants && <span>Search plants</span>}
-                {plants && <span>Add more plants</span>}
+                {plants && <span>Add {plants.length > 0 && 'more'} plants</span>}
               </Link>
             </div>
           </div>

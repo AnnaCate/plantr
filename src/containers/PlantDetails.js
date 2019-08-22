@@ -29,7 +29,7 @@ const PlantDetails = ({_id, currentUser}) => {
         setPlantWithNotes(res.data.data);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [_id]);
 
   const handleChange = e => {
     setPlantWithNotes({
@@ -42,7 +42,6 @@ const PlantDetails = ({_id, currentUser}) => {
     e.preventDefault();
     setIsEditing(false);
 
-    console.log(plantWithNotes);
     axios({
       method: 'put',
       url: `/garden/details/${_id}`,
@@ -56,7 +55,7 @@ const PlantDetails = ({_id, currentUser}) => {
         numTransplanted: plantWithNotes.numTransplanted,
         observations: plantWithNotes.observations,
       },
-    }).then(res => console.log(res));
+    });
   };
 
   return (

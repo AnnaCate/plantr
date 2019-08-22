@@ -13,11 +13,9 @@ const NavBar = props => {
   const logout = e => {
     e.preventDefault();
 
-    console.log('logging out');
     axios
       .post('/user/logout')
       .then(response => {
-        console.log(response.data);
         if (response.status === 200) {
           props.updateUser({
             loggedIn: false,
@@ -31,15 +29,14 @@ const NavBar = props => {
 
   return (
     <nav
-      className='navbar is-primary is-transparent'
+      className='navbar is-primary is-transparent is-fixed-top'
       role='navigation'
       aria-label='main navigation'>
       <div className='navbar-brand'>
-        <a className='navbar-item is-size-3' href='/'>
-          <span role='img' aria-label='watermelon emoji'>
-            🍉
+        <a className='navbar-item no-tb-padding' href='/'>
+          <span id='plantr' className='is-size-1'>
+            plantr
           </span>
-          <span id='flora-files'>Flora Files</span>
         </a>
 
         <div

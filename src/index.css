@@ -15,15 +15,34 @@
   justify-content: center;
 }
 
-#flora-files {
-  font-family: 'Kristi', cursive;
-  margin-right: 1.5rem;
+#plantr {
+  font-family: 'Amatic SC', cursive;
+}
+
+#center {
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.no-tb-padding {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* SearchBar */
 
 #search-box {
-  width: 300px;
+  width: 375px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid rgb(219, 219, 219);
+  border-radius: 0;
+  background-image: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
 .no-bottom-padding {
