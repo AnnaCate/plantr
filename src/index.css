@@ -89,23 +89,7 @@
   overflow-x: hidden;
 }
 
-/* Garden modal */
-
-/* .modal-card {
-  width: 660px;
-}
-
-.modal-card-foot {
-  justify-content: space-between;
-}
-
-.table {
-  margin-right: 20px;
-}
-
-.table input {
-  width: 310;
-} */
+/* Garden plant details */
 
 .table th {
   width: 350px;
@@ -117,4 +101,8 @@
 
 .hero .hero-body {
   padding-bottom: 0;
+}
+
+#plant-details-header {
+  padding-top: 24px;
 }

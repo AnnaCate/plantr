@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from '@reach/router';
 import axios from 'axios';
-import titleCase from '../utils/titleCase';
-import convertArray from '../utils/convertArray';
+import DetailsTable from '../components/DetailsTable';
 
 const PlantDetails = ({_id, currentUser}) => {
   const [plantWithNotes, setPlantWithNotes] = useState({
@@ -38,6 +37,16 @@ const PlantDetails = ({_id, currentUser}) => {
     });
   };
 
+  // 🚨This definitely needs to be done differently
+  const handleCancel = () => {
+    setIsEditing(false);
+    axios.get(`/garden/details/${_id}`).then(res => {
+      setPlantWithNotes(res.data.data);
+    });
+  };
+
+  const handleEdit = () => setIsEditing(true);
+
   const handleSubmit = e => {
     e.preventDefault();
     setIsEditing(false);
@@ -64,7 +73,7 @@ const PlantDetails = ({_id, currentUser}) => {
         <div>Loading...</div>
       ) : (
         <>
-          <div className='margin-left margin-top'>
+          <div className='section no-bottom-padding'>
             <Link to='/your-garden'>
               <span role='img' aria-label='left arrow emoji'>
                 ⬅️{' '}
@@ -72,111 +81,24 @@ const PlantDetails = ({_id, currentUser}) => {
               Go Back
             </Link>
           </div>
+
           <header className='hero'>
-            <div className='hero-body'>
+            <div className='hero-body' id='plant-details-header'>
               <h1 className='title'>{plantInView.commonName}</h1>
             </div>
           </header>
 
           <section className='section'>
             <div className='columns'>
-              <div className='column is-6'>
-                <h1 className='subtitle'>
-                  <span role='img' aria-label='book emoji'>
-                    📖{' '}
-                  </span>{' '}
-                  Plant Information:
-                </h1>
-                <table className='table is-fullwidth'>
-                  <tbody>
-                    <tr>
-                      <th>Appropriate for USDA Hardiness Zones</th>
-                      <td>{`${plantInView.usdaHardinessZones[0]} - ${
-                        plantInView.usdaHardinessZones[
-                          plantInView.usdaHardinessZones.length - 1
-                        ]
-                      }`}</td>
-                    </tr>
-                    <tr>
-                      <th>Sun</th>
-                      <td>{titleCase(plantInView.sunHrs)}</td>
-                    </tr>
-                    <tr>
-                      <th>Soil</th>
-                      <td>{titleCase(plantInView.soil)}</td>
-                    </tr>
-                    <tr>
-                      <th>pH</th>
-                      <td>
-                        {plantInView.minPh} - {plantInView.maxPh}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Plant next to</th>
-                      <td>{convertArray(plantInView, 'companions')}</td>
-                    </tr>
-                    <tr>
-                      <th>Don't plant next to</th>
-                      <td>{convertArray(plantInView, 'enemies')}</td>
-                    </tr>
-                    <tr>
-                      <th>Spacing between plants</th>
-                      <td>
-                        {plantInView.spacingBtwnPlants_in}{' '}
-                        {plantInView.spacingBtwnPlants_in && 'inches'}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Spacing between rows</th>
-                      <td>
-                        {plantInView.spacingBtwnRows_in}{' '}
-                        {plantInView.spacingBtwnRows_in && 'inches'}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Water</th>
-                      <td>{titleCase(plantInView.water)}</td>
-                    </tr>
-                    <tr>
-                      <th>Fertilizer</th>
-                      <td>{plantInView.fertilizer}</td>
-                    </tr>
-                    <tr>
-                      <th>Diseases</th>
-                      <td>{convertArray(plantInView, 'diseases')}</td>
-                    </tr>
-                    <tr>
-                      <th>Pests</th>
-                      <td>{convertArray(plantInView, 'pests')}</td>
-                    </tr>
-                    <tr>
-                      <th>Start seeds indoors</th>
-                      <td>{titleCase(plantInView.startSeedsIndoors)}</td>
-                    </tr>
-                    <tr>
-                      <th>Transplant</th>
-                      <td>{plantInView.transplant}</td>
-                    </tr>
-                    <tr>
-                      <th>Direct sow</th>
-                      <td>{titleCase(plantInView.directSow)}</td>
-                    </tr>
-                    <tr>
-                      <th>Days to germination</th>
-                      <td>{plantInView.daysToGermination}</td>
-                    </tr>
-                    <tr>
-                      <th>Days until harvest</th>
-                      <td>{plantInView.daysToHarvest}</td>
-                    </tr>
-                    <tr>
-                      <th>Other tips</th>
-                      <td>{plantInView.otherCare}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <DetailsTable plantInView={plantInView} />
 
+              {/* <Notes
+                isEditing={isEditing}
+                plantWithNotes={plantWithNotes}
+                handleChange={handleChange}
+                handleCancel={handleCancel}
+                handleEdit={handleEdit}
+              /> */}
               <div className='column is-6 your-notes'>
                 <h1 className='subtitle'>
                   <span role='img' aria-label='pencil emoji'>
@@ -374,9 +296,7 @@ const PlantDetails = ({_id, currentUser}) => {
                 {isEditing && (
                   <div className='field is-grouped is-grouped-right'>
                     <div className='control'>
-                      <button
-                        className='button is-text'
-                        onClick={() => setIsEditing(false)}>
+                      <button className='button is-text' onClick={handleCancel}>
                         Cancel
                       </button>
                     </div>
@@ -391,9 +311,7 @@ const PlantDetails = ({_id, currentUser}) => {
                   </div>
                 )}
                 {!isEditing && (
-                  <button
-                    className='button is-pulled-right'
-                    onClick={() => setIsEditing(true)}>
+                  <button className='button is-pulled-right' onClick={handleEdit}>
                     Edit
                   </button>
                 )}
