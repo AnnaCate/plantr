@@ -44,6 +44,10 @@
   margin-top: 1rem;
 }
 
+.margin-left {
+  margin-left: 1rem;
+}
+
 /* Home page card list */
 .image .cover {
   object-fit: cover;
@@ -86,4 +90,12 @@
 
 .table th {
   width: 350px;
+}
+
+.your-notes .table th {
+  width: 290px;
+}
+
+.hero .hero-body {
+  padding-bottom: 0;
 }

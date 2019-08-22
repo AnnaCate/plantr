@@ -26,6 +26,14 @@ const Garden = ({currentUser}) => {
 
   return (
     <>
+      <header className='hero'>
+        <div className='hero-body no-bottom-padding'>
+          <div className='container'>
+            <h1 className='title has-text-centered'>Your Garden</h1>
+          </div>
+        </div>
+      </header>
+
       <section className='section'>
         <GardenPlants
           plants={plants}
