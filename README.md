@@ -11,6 +11,7 @@ A React web app to help you plan your vegetable garden.
 
 - Change `table` to `form` on `Your Notes`
 - Add more details to `About` page
+- Add notifications to the UI for signup when email or username is already in use
 - Make code more DRY
 - Use `async/await`
 - Change alert method for successfully planting something vs when it's already planted

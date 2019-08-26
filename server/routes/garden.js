@@ -3,13 +3,13 @@ const router = express.Router();
 const GardenPlant = require('../database/models/gardenPlant');
 
 // SAVE PLANT TO GARDEN
-router.post('/', (req, res, next) => {
+router.post('/', (req, res) => {
   const {user, plant} = req.body;
   GardenPlant.findOne({user: user, plant: plant}, (err, foundPlant) => {
-    if (foundPlant) {
-      res.json({
-        error: 'Already planted',
-      });
+    if (err) {
+      console.log(err);
+    } else if (foundPlant) {
+      res.json({error: 'Already planted'});
     } else {
       const newGardenPlant = new GardenPlant({
         user: user,
@@ -24,29 +24,32 @@ router.post('/', (req, res, next) => {
         observations: '',
       });
       newGardenPlant.save((err, savedGardenPlant) => {
-        if (err) return res.json(err);
-        res.json(savedGardenPlant);
+        if (err) {
+          res.json({error: 'Error saving plant to garden'});
+        } else {
+          res.json(savedGardenPlant);
+        }
       });
     }
   });
 });
 
 // GET GARDEN PLANTS
-router.get('/:userId', (req, res, next) => {
+router.get('/:userId', (req, res) => {
   GardenPlant.find({user: req.params.userId})
     .populate('plant')
     .then(plants => res.json({status: 'ok', data: plants}));
 });
 
 // GET GARDEN PLANT DETAILS
-router.get('/details/:gardenPlantId', (req, res, next) => {
+router.get('/details/:gardenPlantId', (req, res) => {
   GardenPlant.findById(req.params.gardenPlantId)
     .populate('plant')
     .then(plant => res.json({status: 'ok', data: plant}));
 });
 
 // PUT GARDEN PLANT DETAILS
-router.put('/details/:gardenPlantId', (req, res, next) => {
+router.put('/details/:gardenPlantId', (req, res) => {
   GardenPlant.findById(req.params.gardenPlantId).then(plant => {
     plant.variety = req.body.variety;
     plant.dateStartedIndoors = req.body.dateStartedIndoors;
@@ -62,9 +65,9 @@ router.put('/details/:gardenPlantId', (req, res, next) => {
 });
 
 // DELETE PLANT FROM GARDEN
-router.delete('/:gardenPlantId', (req, response, next) => {
-  GardenPlant.findByIdAndDelete({_id: req.params.gardenPlantId}).then(res =>
-    response.json({status: 'ok', res: req.params.gardenPlantId})
+router.delete('/:gardenPlantId', (req, res) => {
+  GardenPlant.findByIdAndDelete({_id: req.params.gardenPlantId}).then(() =>
+    res.json({status: 'ok', res: req.params.gardenPlantId})
   );
 });
 

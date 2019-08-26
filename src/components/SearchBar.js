@@ -10,7 +10,7 @@ const SearchBar = ({
 
   const handleSearch = value => {
     const foundPlant = allPlants.filter(plant =>
-      plant.commonName.toLowerCase().includes(value.toLowerCase())
+      plant.commonName.toLowerCase().startsWith(value.toLowerCase())
     );
     if (value.length === 0) {
       setSearchIsActive(false);

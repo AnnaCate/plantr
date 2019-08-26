@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-mongoose.promise = Promise; // maybe don't need this?
-
 // define gardenPlantSchema
 const gardenPlantSchema = new Schema({
   user: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],

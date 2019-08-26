@@ -5,8 +5,6 @@ const passport = require('../passport');
 
 // SIGN UP
 router.post('/', (req, res) => {
-  console.log('user signup');
-
   const {username, password, email, hardinessZone} = req.body;
 
   // validate username
@@ -15,7 +13,7 @@ router.post('/', (req, res) => {
       console.log('User.js post error: ', err);
     } else if (user) {
       res.json({
-        error: `Sorry, already a user with the username ${username}`,
+        error: `Sorry, username ${username} is already in use.`,
       });
     } else {
       User.findOne({email: email}, (err, user) => {
@@ -23,7 +21,7 @@ router.post('/', (req, res) => {
           console.log('User.js post error: ', err);
         } else if (user) {
           res.json({
-            error: `The email ${email} is already in use`,
+            error: `The email ${email} is already in use.`,
           });
         } else {
           const newUser = new User({
@@ -43,44 +41,26 @@ router.post('/', (req, res) => {
 });
 
 // LOG IN
-router.post(
-  '/login',
-  (req, res, next) => {
-    console.log('routes/user.js, login, req.body: ');
-    console.log(req.body);
-    next();
-  },
-  passport.authenticate('local'),
-  (req, res) => {
-    console.log('logged in', req.user);
-    const userInfo = {
-      _id: req.user._id,
-      username: req.user.username,
-      hardinessZone: req.user.hardinessZone,
-    };
-    res.send(userInfo);
-  }
-);
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  const userInfo = {
+    _id: req.user._id,
+    username: req.user.username,
+    hardinessZone: req.user.hardinessZone,
+  };
+  res.send(userInfo);
+});
 
 // GET LOGGED IN USER
-router.get('/', (req, res, next) => {
-  console.log('===== user ======');
-  console.log(req.user);
-  if (req.user) {
-    res.json({user: req.user});
-  } else {
-    res.json({user: null});
-  }
-});
+router.get('/', (req, res) =>
+  req.user ? res.json({user: req.user}) : res.json({user: null})
+);
 
 // LOG OUT
 router.post('/logout', (req, res) => {
   if (req.user) {
     req.logout();
     res.send({msg: 'logging out'});
-  } else {
-    res.send({msg: 'no user to log out'});
-  }
+  } else res.send({msg: 'no user to log out'});
 });
 
 module.exports = router;
