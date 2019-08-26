@@ -17,6 +17,7 @@ const App = () => {
     loggedIn: false,
     username: null,
     _id: null,
+    hardinessZone: null,
   });
 
   // get logged in user when component mounts
@@ -26,14 +27,21 @@ const App = () => {
 
   const getUser = () => {
     axios.get('/user/').then(response => {
+      console.log(response);
       if (response.data.user) {
         setCurrentUser({
           loggedIn: true,
           username: response.data.user.username,
           _id: response.data.user._id,
+          hardinessZone: response.data.user.hardinessZone,
         });
       } else {
-        setCurrentUser({loggedIn: false, username: null, _id: null});
+        setCurrentUser({
+          loggedIn: false,
+          username: null,
+          _id: null,
+          hardinessZone: null,
+        });
       }
     });
   };
@@ -59,6 +67,7 @@ const App = () => {
   return (
     <div id='site'>
       <NavBar updateUser={updateUser} currentUser={currentUser} />
+
       <div id='site-content'>
         <Router>
           <HomePage path='/' currentUser={currentUser} />

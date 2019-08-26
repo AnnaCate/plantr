@@ -38,6 +38,7 @@ const LogInForm = props => {
             loggedIn: true,
             username: response.data.username,
             _id: response.data._id,
+            hardinessZone: response.data.hardinessZone,
           });
           navigate('/your-garden');
         }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link} from '@reach/router';
+import {Link, navigate} from '@reach/router';
 import axios from 'axios';
 
 const NavBar = props => {
@@ -21,9 +21,11 @@ const NavBar = props => {
             loggedIn: false,
             username: null,
             _id: null,
+            hardinessZone: null,
           });
         }
       })
+      .then(res => navigate('/'))
       .catch(err => console.log('Logout error'));
   };
 

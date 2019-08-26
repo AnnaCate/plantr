@@ -20,6 +20,9 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  hardinessZone: {
+    type: Number,
+  },
 });
 
 // define schema methods

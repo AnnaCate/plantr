@@ -23,12 +23,26 @@ const Garden = ({currentUser}) => {
 
   return (
     <>
-      <header className='hero'>
-        <div className='hero-body no-bottom-padding'>
-          <div className='container'>
-            <h1 className='title has-text-centered'>Your Garden</h1>
-          </div>
+      <header className='section columns no-bottom-padding'>
+        <div className='column is-one-third'>
+          <span className='icon has-text-success'>
+            <i className='fas fa-check-square' />
+          </span>
+          <span className='is-size-7'>
+            = Suitable for Hardiness Zone {currentUser.hardinessZone}
+          </span>
+          <br />
+          <span className='icon has-text-danger'>
+            <i className='fas fa-ban' />
+          </span>
+          <span className='is-size-7'>
+            = Not suitable for Hardiness Zone {currentUser.hardinessZone}
+          </span>
         </div>
+        <div className='column is-one-third'>
+          <h1 className='title has-text-centered'>Your Garden</h1>
+        </div>
+        <div className='column is-one-third'></div>
       </header>
 
       <section className='section has-text-centered'>

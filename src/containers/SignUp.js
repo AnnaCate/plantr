@@ -11,12 +11,14 @@ import emailValidator from 'email-validator';
 const SignupForm = props => {
   const [user, setUser] = useState({
     email: '',
+    hardinessZone: '',
     username: '',
     password: '',
     confirmPassword: '',
   });
   const [emailIsValid, setEmailIsValid] = useState(true);
   const [emailInUse, setEmailInUse] = useState(false); // will set in axios call
+  const [hardinessZoneIsValid, setHardinessZoneIsValid] = useState(true);
   const [usernameAvailable, setUsernameAvailable] = useState(true); // will set in axios call
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
@@ -34,6 +36,18 @@ const SignupForm = props => {
 
   const showEmailInUseError = () => {
     return emailInUse ? '' : 'hidden';
+  };
+
+  const validateHardinessZone = () => {
+    if (user.hardinessZone >= 1 && user.hardinessZone <= 13) {
+      setHardinessZoneIsValid(true);
+    } else {
+      setHardinessZoneIsValid(false);
+    }
+  };
+
+  const showHardinessZoneError = () => {
+    return hardinessZoneIsValid ? 'hidden' : '';
   };
 
   const showUsernameError = () => {
@@ -55,11 +69,13 @@ const SignupForm = props => {
   const checkCompletion = () => {
     if (
       user.email === '' ||
+      user.hardinessZone === '' ||
       user.username === '' ||
       user.password === '' ||
       user.confirmPassword === '' ||
       emailInUse ||
       !emailIsValid ||
+      !hardinessZoneIsValid ||
       !usernameAvailable ||
       !passwordsMatch
     ) {
@@ -79,17 +95,12 @@ const SignupForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log('SignupForm username: ');
-    console.log(user.username);
-    console.log(user.password);
-    console.log(user.confirmPassword);
-
-    // POST request to server
     axios
       .post('/user/', {
         username: user.username,
         password: user.password,
         email: user.email,
+        hardinessZone: user.hardinessZone,
       })
       .then(response => {
         console.log(response);
@@ -109,11 +120,13 @@ const SignupForm = props => {
   const handleCancel = e => {
     setUser({
       email: '',
+      hardinessZone: '',
       username: '',
       password: '',
       confirmPassword: '',
     });
     setEmailInUse(false);
+    setHardinessZoneIsValid(true);
     setEmailIsValid(true);
     setPasswordsMatch(true);
     setUsernameAvailable(true);
@@ -148,6 +161,24 @@ const SignupForm = props => {
             </p>
             <p className={`help is-danger ${showEmailInUseError()}`}>
               Email address is already in use.
+            </p>
+          </div>
+
+          <div className='field'>
+            <div className='control'>
+              <label className='label'>Your USDA Plant Hardiness Zone:</label>
+              <input
+                className='input'
+                type='text'
+                name='hardinessZone'
+                placeholder='Enter a value 1 through 13'
+                value={user.hardinessZone || ''}
+                onChange={handleChange}
+                onBlur={validateHardinessZone}
+              />
+            </div>
+            <p className={`help is-danger ${showHardinessZoneError()}`}>
+              Please enter a valid number 1 through 13.
             </p>
           </div>
 
@@ -188,6 +219,7 @@ const SignupForm = props => {
                 className='input'
                 type='password'
                 name='confirmPassword'
+                placeholder='Retype password'
                 value={user.confirmPassword || ''}
                 onChange={handleChange}
                 onBlur={validatePassword}

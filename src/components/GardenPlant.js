@@ -19,6 +19,16 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
     }
   };
 
+  const suitable = () =>
+    eachPlant.plant[0].usdaHardinessZones.includes(currentUser.hardinessZone)
+      ? ''
+      : 'is-hidden';
+
+  const notSuitable = () =>
+    eachPlant.plant[0].usdaHardinessZones.includes(currentUser.hardinessZone)
+      ? 'is-hidden'
+      : '';
+
   return (
     <>
       <li key={eachPlant._id} className='column is-one-quarter'>
@@ -42,10 +52,10 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
               </div>
               <div className='level-right'>
                 <div className='level-item has-text-centered'>
-                  <span className='icon has-text-success'>
+                  <span className={`icon has-text-success ${suitable()}`}>
                     <i className='fas fa-check-square' />
                   </span>
-                  <span className='icon has-text-danger'>
+                  <span className={`icon has-text-danger ${notSuitable()}`}>
                     <i className='fas fa-ban' />
                   </span>
                 </div>
