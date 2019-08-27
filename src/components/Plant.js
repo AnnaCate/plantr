@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from './Modal';
 import axios from 'axios';
 import {navigate} from '@reach/router';
@@ -18,7 +18,6 @@ const Plant = ({plant, currentUser}) => {
             plant: plantId,
           })
           .then(response => {
-            console.log(response);
             if (!response.data.error) {
               // get plant name, in cases where a qualifier is listed after a comma
               const firstWord = commonName.split(',').shift();

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link} from '@reach/router';
 import axios from 'axios';
 import GardenPlants from '../components/GardenPlants';
+import IconLegend from '../components/IconLegend';
 
 const Garden = ({currentUser}) => {
   const [plants, setPlants] = useState([]);
@@ -25,19 +26,7 @@ const Garden = ({currentUser}) => {
     <>
       <header className='section columns no-bottom-padding'>
         <div className='column is-one-third'>
-          <span className='icon has-text-success'>
-            <i className='fas fa-check-square' />
-          </span>
-          <span className='is-size-7'>
-            = Suitable for Hardiness Zone {currentUser.hardinessZone}
-          </span>
-          <br />
-          <span className='icon has-text-danger'>
-            <i className='fas fa-ban' />
-          </span>
-          <span className='is-size-7'>
-            = Not suitable for Hardiness Zone {currentUser.hardinessZone}
-          </span>
+          <IconLegend currentUser={currentUser} />
         </div>
         <div className='column is-one-third'>
           <h1 className='title has-text-centered'>Your Garden</h1>

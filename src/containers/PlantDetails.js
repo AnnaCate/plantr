@@ -91,7 +91,15 @@ const PlantDetails = ({_id, currentUser}) => {
 
           <section className='section'>
             <div className='columns'>
-              <DetailsTable plantInView={plantInView} />
+              <div className='column is-6'>
+                <h1 className='subtitle'>
+                  <span role='img' aria-label='book emoji'>
+                    📖{' '}
+                  </span>{' '}
+                  Plant Information:
+                </h1>
+                <DetailsTable plantInView={plantInView} />
+              </div>
 
               <Notes
                 isEditing={isEditing}

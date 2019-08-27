@@ -4,6 +4,7 @@ import axios from 'axios';
 import emailValidator from 'email-validator';
 
 const SignupForm = () => {
+  // new user state
   const [user, setUser] = useState({
     email: '',
     hardinessZone: '',
@@ -11,6 +12,8 @@ const SignupForm = () => {
     password: '',
     confirmPassword: '',
   });
+
+  // validation states
   const [emailIsValid, setEmailIsValid] = useState(true);
   const [emailAvailable, setEmailAvailable] = useState(true);
   const [hardinessZoneIsValid, setHardinessZoneIsValid] = useState(true);
@@ -18,6 +21,10 @@ const SignupForm = () => {
   const [passwordLengthOk, setPasswordLengthOk] = useState(true);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
+  /**
+   * Validate each input field
+   * @param {Event} e onBlur event
+   */
   const validate = e => {
     switch (e.target.name) {
       case 'email':
@@ -38,8 +45,17 @@ const SignupForm = () => {
     }
   };
 
+  /**
+   * Return appropriate class name dependong on input
+   * @param {String} validator The relevant state name
+   * @return {String} The `is-hidden` class name or an empty string
+   */
   const showOrHide = validator => (validator ? 'is-hidden' : '');
 
+  /**
+   * Check completion and validity of form
+   * @return {Boolean}
+   */
   const checkCompletion = () =>
     user.email === '' ||
     user.hardinessZone === '' ||

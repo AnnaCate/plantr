@@ -3,14 +3,15 @@ import axios from 'axios';
 import SearchBar from '../components/SearchBar';
 import PlantList from '../components/PlantList';
 import Pagination from '../components/Pagination';
+import IconLegend from '../components/IconLegend';
 
-const HomePage = props => {
+const HomePage = ({currentUser}) => {
   const [allPlants, setAllPlants] = useState([]);
   const [visiblePlants, setVisiblePlants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchIsActive, setSearchIsActive] = useState(false);
 
-  // GET plants from API
+  // GET plants from plants API on component mount
   useEffect(() => {
     axios
       .get('/plants')
@@ -36,23 +37,7 @@ const HomePage = props => {
       <section className='section no-bottom-padding'>
         <div className='columns'>
           <div className='column is-one-third'>
-            {props.currentUser.loggedIn && (
-              <div>
-                <span className='icon has-text-success'>
-                  <i className='fas fa-check-square' />
-                </span>
-                <span className='is-size-7'>
-                  = Suitable for Hardiness Zone {props.currentUser.hardinessZone}
-                </span>
-                <br />
-                <span className='icon has-text-danger'>
-                  <i className='fas fa-ban' />
-                </span>
-                <span className='is-size-7'>
-                  = Not suitable for Hardiness Zone {props.currentUser.hardinessZone}
-                </span>
-              </div>
-            )}
+            {currentUser.loggedIn && <IconLegend currentUser={currentUser} />}
           </div>
 
           <div className='column is-one-third has-text-centered'>
@@ -68,7 +53,7 @@ const HomePage = props => {
       </section>
 
       <section className='section'>
-        <PlantList plants={visiblePlants} currentUser={props.currentUser} />
+        <PlantList plants={visiblePlants} currentUser={currentUser} />
       </section>
       {!searchIsActive && (
         <Pagination
