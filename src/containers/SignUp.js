@@ -151,11 +151,12 @@ const SignupForm = () => {
                 <div className='control'>
                   <label className='label'>
                     Your USDA Plant Hardiness Zone:{' '}
-                    <a
+                    <span
+                      id='info'
                       className='icon has-text-grey-light'
                       onClick={handleInfoClick}>
                       <i className='fas fa-info-circle' />
-                    </a>
+                    </span>
                   </label>
                   <input
                     className='input'

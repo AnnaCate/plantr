@@ -63,6 +63,10 @@
   margin-left: 1rem;
 }
 
+#info:hover {
+  cursor: pointer;
+}
+
 /* Home page card list */
 .image .cover {
   object-fit: cover;

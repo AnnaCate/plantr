@@ -7,10 +7,14 @@ const LogInForm = props => {
     username: '',
     password: '',
   });
+  const [isValid, setIsValid] = useState(true);
 
   const checkCompletion = () => user.username === '' || user.password === '';
 
-  const handleChange = e => setUser({...user, [e.target.name]: e.target.value});
+  const handleChange = e => {
+    setUser({...user, [e.target.name]: e.target.value});
+    setIsValid(true);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -32,7 +36,7 @@ const LogInForm = props => {
           navigate('/your-garden');
         }
       })
-      .catch(() => window.alert('Incorrect username or password'));
+      .catch(() => setIsValid(false));
   };
 
   const handleCancel = () => {
@@ -42,6 +46,8 @@ const LogInForm = props => {
     });
     navigate('/');
   };
+
+  const helpHelper = () => (isValid ? 'is-invisible' : '');
 
   return (
     <section className='section'>
@@ -76,6 +82,9 @@ const LogInForm = props => {
                   onChange={handleChange}
                 />
               </div>
+              <p className={`help is-danger ${helpHelper()}`}>
+                Incorrect username or password.
+              </p>
             </div>
 
             <div className='field is-grouped is-grouped-centered'>

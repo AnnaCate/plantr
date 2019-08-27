@@ -116,6 +116,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                       name='observations'
                       value={plantWithNotes.observations || ''}
                       onChange={handleChange}
+                      wrap='hard'
                     />
                   </td>
                 )}
