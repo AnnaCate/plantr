@@ -4,7 +4,7 @@ import axios from 'axios';
 import DetailsTable from '../components/DetailsTable';
 import Notes from '../components/Notes';
 
-const PlantDetails = ({_id, currentUser}) => {
+const PlantDetails = ({_id}) => {
   const [plantWithNotes, setPlantWithNotes] = useState({
     variety: '',
     dateStartedIndoors: '',
@@ -16,7 +16,6 @@ const PlantDetails = ({_id, currentUser}) => {
     observations: '',
   });
   const [plantInView, setPlantInView] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     axios
@@ -30,43 +29,6 @@ const PlantDetails = ({_id, currentUser}) => {
       })
       .catch(err => console.log(err));
   }, [_id]);
-
-  const handleChange = e => {
-    setPlantWithNotes({
-      ...plantWithNotes,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // 🚨This definitely needs to be done differently
-  const handleCancel = () => {
-    setIsEditing(false);
-    axios.get(`/garden/details/${_id}`).then(res => {
-      setPlantWithNotes(res.data.data);
-    });
-  };
-
-  const handleEdit = () => setIsEditing(true);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setIsEditing(false);
-
-    axios({
-      method: 'put',
-      url: `/garden/details/${_id}`,
-      data: {
-        variety: plantWithNotes.variety,
-        dateStartedIndoors: plantWithNotes.dateStartedIndoors,
-        dateDirectSowed: plantWithNotes.dateDirectSowed,
-        numSeedsSowed: plantWithNotes.numSeedsSowed,
-        numGerminated: plantWithNotes.numGerminated,
-        dateTransplanted: plantWithNotes.dateTransplanted,
-        numTransplanted: plantWithNotes.numTransplanted,
-        observations: plantWithNotes.observations,
-      },
-    });
-  };
 
   return (
     <>
@@ -98,16 +60,13 @@ const PlantDetails = ({_id, currentUser}) => {
                   </span>{' '}
                   Plant Information:
                 </h1>
-                <DetailsTable plantInView={plantInView} />
+                <DetailsTable plant={plantInView} />
               </div>
 
               <Notes
-                isEditing={isEditing}
                 plantWithNotes={plantWithNotes}
-                handleChange={handleChange}
-                handleCancel={handleCancel}
-                handleEdit={handleEdit}
-                handleSubmit={handleSubmit}
+                setPlantWithNotes={setPlantWithNotes}
+                objectId={_id}
               />
             </div>
           </section>

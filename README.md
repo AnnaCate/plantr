@@ -9,8 +9,8 @@ A React web app to help you plan your vegetable garden.
 
 ## Other todos
 
-- Change `table` to `form` on `Your Notes`
 - Add more details to `About` page
+- Add text wrapping to Other Notes textarea
 - Make code more DRY
 - Use `async/await`
 - Change alert method for successfully planting something vs when it's already planted

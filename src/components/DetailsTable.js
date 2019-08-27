@@ -2,97 +2,93 @@ import React from 'react';
 import titleCase from '../utils/titleCase';
 import convertArray from '../utils/convertArray';
 
-const DetailsTable = ({plantInView}) => {
+const DetailsTable = ({plant}) => {
   return (
     <>
-      {plantInView.length === 0 ? (
+      {plant.length === 0 ? (
         <div>Loading...</div>
       ) : (
         <table className='table is-fullwidth'>
           <tbody>
             <tr>
               <th>Appropriate for USDA Hardiness Zones</th>
-              <td>{`${plantInView.usdaHardinessZones[0]} - ${
-                plantInView.usdaHardinessZones[
-                  plantInView.usdaHardinessZones.length - 1
-                ]
+              <td>{`${plant.usdaHardinessZones[0]} - ${
+                plant.usdaHardinessZones[plant.usdaHardinessZones.length - 1]
               }`}</td>
             </tr>
             <tr>
               <th>Sun</th>
-              <td>{titleCase(plantInView.sunHrs)}</td>
+              <td>{titleCase(plant.sunHrs)}</td>
             </tr>
             <tr>
               <th>Soil</th>
-              <td>{titleCase(plantInView.soil)}</td>
+              <td>{titleCase(plant.soil)}</td>
             </tr>
             <tr>
               <th>pH</th>
               <td>
-                {plantInView.minPh} - {plantInView.maxPh}
+                {plant.minPh} - {plant.maxPh}
               </td>
             </tr>
             <tr>
               <th>Plant next to</th>
-              <td>{convertArray(plantInView, 'companions')}</td>
+              <td>{convertArray(plant, 'companions')}</td>
             </tr>
             <tr>
               <th>Don't plant next to</th>
-              <td>{convertArray(plantInView, 'enemies')}</td>
+              <td>{convertArray(plant, 'enemies')}</td>
             </tr>
             <tr>
               <th>Spacing between plants</th>
               <td>
-                {plantInView.spacingBtwnPlants_in}{' '}
-                {plantInView.spacingBtwnPlants_in && 'inches'}
+                {plant.spacingBtwnPlants_in} {plant.spacingBtwnPlants_in && 'inches'}
               </td>
             </tr>
             <tr>
               <th>Spacing between rows</th>
               <td>
-                {plantInView.spacingBtwnRows_in}{' '}
-                {plantInView.spacingBtwnRows_in && 'inches'}
+                {plant.spacingBtwnRows_in} {plant.spacingBtwnRows_in && 'inches'}
               </td>
             </tr>
             <tr>
               <th>Water</th>
-              <td>{titleCase(plantInView.water)}</td>
+              <td>{titleCase(plant.water)}</td>
             </tr>
             <tr>
               <th>Fertilizer</th>
-              <td>{plantInView.fertilizer}</td>
+              <td>{plant.fertilizer}</td>
             </tr>
             <tr>
               <th>Diseases</th>
-              <td>{convertArray(plantInView, 'diseases')}</td>
+              <td>{convertArray(plant, 'diseases')}</td>
             </tr>
             <tr>
               <th>Pests</th>
-              <td>{convertArray(plantInView, 'pests')}</td>
+              <td>{convertArray(plant, 'pests')}</td>
             </tr>
             <tr>
               <th>Start seeds indoors</th>
-              <td>{titleCase(plantInView.startSeedsIndoors)}</td>
+              <td>{titleCase(plant.startSeedsIndoors)}</td>
             </tr>
             <tr>
               <th>Transplant</th>
-              <td>{plantInView.transplant}</td>
+              <td>{plant.transplant}</td>
             </tr>
             <tr>
               <th>Direct sow</th>
-              <td>{titleCase(plantInView.directSow)}</td>
+              <td>{titleCase(plant.directSow)}</td>
             </tr>
             <tr>
               <th>Days to germination</th>
-              <td>{plantInView.daysToGermination}</td>
+              <td>{plant.daysToGermination}</td>
             </tr>
             <tr>
               <th>Days until harvest</th>
-              <td>{plantInView.daysToHarvest}</td>
+              <td>{plant.daysToHarvest}</td>
             </tr>
             <tr>
               <th>Other tips</th>
-              <td>{plantInView.otherCare}</td>
+              <td>{plant.otherCare}</td>
             </tr>
           </tbody>
         </table>

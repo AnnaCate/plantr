@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link, navigate} from '@reach/router';
 import axios from 'axios';
 
-const NavBar = props => {
+const NavBar = ({currentUser, updateUser}) => {
   const [isActive, setIsActive] = useState('');
 
   // update `is-active` state for use with dropdown menu on mobile devices
@@ -17,7 +17,7 @@ const NavBar = props => {
       .post('/user/logout')
       .then(response => {
         if (response.status === 200) {
-          props.updateUser({
+          updateUser({
             loggedIn: false,
             username: null,
             _id: null,
@@ -25,8 +25,8 @@ const NavBar = props => {
           });
         }
       })
-      .then(res => navigate('/'))
-      .catch(err => console.log('Logout error'));
+      .then(() => navigate('/'))
+      .catch(err => console.log(err));
   };
 
   return (
@@ -59,7 +59,7 @@ const NavBar = props => {
             About
           </Link>
 
-          {props.currentUser.loggedIn && (
+          {currentUser.loggedIn && (
             <Link to='/your-garden' className='navbar-item'>
               <span role='img' aria-label='sunflower emoji'>
                 🌻
@@ -69,22 +69,22 @@ const NavBar = props => {
           )}
         </div>
         <div className='navbar-end'>
-          {props.currentUser.loggedIn && (
-            <div className='navbar-item'>Welcome, {props.currentUser.username}!</div>
+          {currentUser.loggedIn && (
+            <div className='navbar-item'>Welcome, {currentUser.username}!</div>
           )}
           <div className='navbar-item'>
             <div className='buttons'>
-              {!props.currentUser.loggedIn && (
+              {!currentUser.loggedIn && (
                 <Link to='/signup' className='button is-primary'>
                   <strong>Sign up</strong>
                 </Link>
               )}
-              {!props.currentUser.loggedIn && (
+              {!currentUser.loggedIn && (
                 <Link to='/login' className='button is-light'>
                   Log in
                 </Link>
               )}
-              {props.currentUser.loggedIn && (
+              {currentUser.loggedIn && (
                 <Link to='/' className='button is-light' onClick={logout}>
                   Log out
                 </Link>

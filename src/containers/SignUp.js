@@ -12,6 +12,7 @@ const SignupForm = () => {
     password: '',
     confirmPassword: '',
   });
+  const [isActive, setIsActive] = useState(false);
 
   // validation states
   const [emailIsValid, setEmailIsValid] = useState(true);
@@ -113,128 +114,175 @@ const SignupForm = () => {
     navigate('/');
   };
 
+  const handleInfoClick = e => setIsActive(!isActive);
+
+  const modalActivator = () => (isActive ? 'is-active' : '');
+
   return (
-    <section className='section'>
-      <div className='columns'>
-        <div className='column is-one-third is-offset-one-third'>
-          <header className='title has-text-centered'>Sign Up</header>
+    <>
+      <section className='section'>
+        <div className='columns'>
+          <div className='column is-one-third is-offset-one-third'>
+            <header className='title has-text-centered'>Sign Up</header>
 
-          <form>
-            <div className='field'>
-              <div className='control'>
-                <label className='label'>Email:</label>
-                <input
-                  className='input'
-                  type='email'
-                  name='email'
-                  autoComplete='email'
-                  value={user.email}
-                  onChange={handleChange}
-                  onBlur={validate}
-                />
+            <form>
+              <div className='field'>
+                <div className='control'>
+                  <label className='label'>Email:</label>
+                  <input
+                    className='input'
+                    type='email'
+                    name='email'
+                    autoComplete='email'
+                    value={user.email}
+                    onChange={handleChange}
+                    onBlur={validate}
+                  />
+                </div>
+                <p className={`help is-danger ${showOrHide(emailIsValid)}`}>
+                  Please enter a valid email address.
+                </p>
+                <p className={`help is-danger ${showOrHide(emailAvailable)}`}>
+                  Email address is already in use.
+                </p>
               </div>
-              <p className={`help is-danger ${showOrHide(emailIsValid)}`}>
-                Please enter a valid email address.
-              </p>
-              <p className={`help is-danger ${showOrHide(emailAvailable)}`}>
-                Email address is already in use.
-              </p>
-            </div>
 
-            <div className='field'>
-              <div className='control'>
-                <label className='label'>Your USDA Plant Hardiness Zone:</label>
-                <input
-                  className='input'
-                  type='text'
-                  name='hardinessZone'
-                  placeholder='Enter a value 1 through 13'
-                  value={user.hardinessZone}
-                  onChange={handleChange}
-                  onBlur={validate}
-                />
+              <div className='field'>
+                <div className='control'>
+                  <label className='label'>
+                    Your USDA Plant Hardiness Zone:{' '}
+                    <a
+                      className='icon has-text-grey-light'
+                      onClick={handleInfoClick}>
+                      <i className='fas fa-info-circle' />
+                    </a>
+                  </label>
+                  <input
+                    className='input'
+                    type='text'
+                    name='hardinessZone'
+                    placeholder='Enter a value 1 through 13'
+                    value={user.hardinessZone}
+                    onChange={handleChange}
+                    onBlur={validate}
+                  />
+                </div>
+                <p className={`help is-danger ${showOrHide(hardinessZoneIsValid)}`}>
+                  Please enter a valid number 1 through 13.
+                </p>
               </div>
-              <p className={`help is-danger ${showOrHide(hardinessZoneIsValid)}`}>
-                Please enter a valid number 1 through 13.
-              </p>
-            </div>
 
-            <div className='field'>
-              <div className='control'>
-                <label className='label'>Username:</label>
-                <input
-                  className='input'
-                  type='text'
-                  name='username'
-                  autoComplete='username'
-                  value={user.username}
-                  onChange={handleChange}
-                  onBlur={validate}
-                />
+              <div className='field'>
+                <div className='control'>
+                  <label className='label'>Username:</label>
+                  <input
+                    className='input'
+                    type='text'
+                    name='username'
+                    autoComplete='username'
+                    value={user.username}
+                    onChange={handleChange}
+                    onBlur={validate}
+                  />
+                </div>
+                <p className={`help is-danger ${showOrHide(usernameAvailable)}`}>
+                  Username is already taken.
+                </p>
               </div>
-              <p className={`help is-danger ${showOrHide(usernameAvailable)}`}>
-                Username is already taken.
-              </p>
-            </div>
 
-            <div className='field'>
-              <div className='control'>
-                <label className='label'>Password:</label>
-                <input
-                  className='input'
-                  type='password'
-                  name='password'
-                  placeholder='Enter a password at least 8 characters long'
-                  autoComplete='new-password'
-                  value={user.password}
-                  onChange={handleChange}
-                  onBlur={validate}
-                />
+              <div className='field'>
+                <div className='control'>
+                  <label className='label'>Password:</label>
+                  <input
+                    className='input'
+                    type='password'
+                    name='password'
+                    placeholder='Enter a password at least 8 characters long'
+                    autoComplete='new-password'
+                    value={user.password}
+                    onChange={handleChange}
+                    onBlur={validate}
+                  />
+                </div>
+                <p className={`help is-danger ${showOrHide(passwordLengthOk)}`}>
+                  Password should be at least 8 characters long.
+                </p>
               </div>
-              <p className={`help is-danger ${showOrHide(passwordLengthOk)}`}>
-                Password should be at least 8 characters long.
-              </p>
-            </div>
 
-            <div className='field'>
-              <div className='control'>
-                <label className='label'>Confirm Password:</label>
-                <input
-                  className='input'
-                  type='password'
-                  name='confirmPassword'
-                  placeholder='Retype password'
-                  autoComplete='new-password'
-                  value={user.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={validate}
-                />
+              <div className='field'>
+                <div className='control'>
+                  <label className='label'>Confirm Password:</label>
+                  <input
+                    className='input'
+                    type='password'
+                    name='confirmPassword'
+                    placeholder='Retype password'
+                    autoComplete='new-password'
+                    value={user.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={validate}
+                  />
+                </div>
+                <p className={`help is-danger ${showOrHide(passwordsMatch)}`}>
+                  Passwords should match.
+                </p>
               </div>
-              <p className={`help is-danger ${showOrHide(passwordsMatch)}`}>
-                Passwords should match.
-              </p>
-            </div>
 
-            <div className='field is-grouped is-grouped-centered'>
-              <div className='control'>
-                <button
-                  className='button is-primary'
-                  type='submit'
-                  onClick={handleSubmit}
-                  disabled={checkCompletion()}>
-                  Submit
-                </button>
+              <div className='field is-grouped is-grouped-centered'>
+                <div className='control'>
+                  <button
+                    className='button is-primary'
+                    type='submit'
+                    onClick={handleSubmit}
+                    disabled={checkCompletion()}>
+                    Submit
+                  </button>
+                </div>
+                <div className='control'>
+                  <button className='button is-text' onClick={handleCancel}>
+                    Cancel
+                  </button>
+                </div>
               </div>
-              <div className='control'>
-                <button className='button is-text' onClick={handleCancel}>
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
+      </section>
+
+      <div className={`modal ${modalActivator()}`}>
+        <div className='modal-background' onClick={handleInfoClick}></div>
+        <div className='modal-content'>
+          <div className='box'>
+            <div className='content'>
+              <p>
+                The <strong>USDA Plant Hardiness Zones</strong> are the standard by
+                which gardeners can determine which plants are most likely to thrive
+                at a location. The zones are based on average annual minimum winter
+                temperature.
+              </p>
+              <p>
+                Check the{' '}
+                <a
+                  href='https://planthardiness.ars.usda.gov/PHZMWeb/'
+                  target='_blank'
+                  rel='noopener noreferrer'>
+                  USDA Agricultural Research Service website
+                </a>{' '}
+                to determine the Hardiness Zone of your location.
+              </p>
+              <p>
+                <strong>NOTE:</strong> Zones are sub-divided into <strong>a</strong>{' '}
+                and <strong>b</strong>, but plantr just needs the numeric portion.
+              </p>
+            </div>
+          </div>
+        </div>
+        <button
+          className='modal-close is-large'
+          aria-label='close'
+          onClick={handleInfoClick}></button>
       </div>
-    </section>
+    </>
   );
 };
 

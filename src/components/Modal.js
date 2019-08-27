@@ -12,7 +12,7 @@ const Modal = ({plant, handlePlantIt, toggleActive, isActive, currentUser}) => {
         </header>
 
         <section className='modal-card-body'>
-          <DetailsTable plantInView={plant} />
+          <DetailsTable plant={plant} />
         </section>
 
         <footer className='modal-card-foot'>

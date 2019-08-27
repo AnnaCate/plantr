@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from '@reach/router';
 import axios from 'axios';
 
-const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
+const GardenPlant = ({gardenPlant, currentUser, getPlants}) => {
   const handleDelete = (objectId, plantName) => {
     const confirm = window.confirm(
       `Are you sure you want to remove ${plantName} from your garden? All of your notes about it will be lost forever.`
@@ -11,34 +11,31 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
     if (confirm) {
       axios
         .delete(`/garden/${objectId}`)
-        .then(res => getPlants(currentUser._id))
-        .catch(err => {
-          console.log('Delete error: ');
-          console.log(err);
-        });
+        .then(() => getPlants(currentUser._id))
+        .catch(err => console.log(err));
     }
   };
 
   const suitable = () =>
-    eachPlant.plant[0].usdaHardinessZones.includes(currentUser.hardinessZone)
+    gardenPlant.plant[0].usdaHardinessZones.includes(currentUser.hardinessZone)
       ? ''
       : 'is-hidden';
 
   const notSuitable = () =>
-    eachPlant.plant[0].usdaHardinessZones.includes(currentUser.hardinessZone)
+    gardenPlant.plant[0].usdaHardinessZones.includes(currentUser.hardinessZone)
       ? 'is-hidden'
       : '';
 
   return (
     <>
-      <li key={eachPlant._id} className='column is-one-quarter'>
+      <li key={gardenPlant._id} className='column is-one-quarter'>
         <div className='card'>
           <div className='card-image'>
             <figure className='image is-4by3'>
               <img
                 className='cover'
-                alt={`${eachPlant.plant[0].commonName}`}
-                src={require(`../images/${eachPlant.plant[0].images[0]}`)}
+                alt={`${gardenPlant.plant[0].commonName}`}
+                src={require(`../images/${gardenPlant.plant[0].images[0]}`)}
               />
             </figure>
           </div>
@@ -47,7 +44,7 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
             <div className='level is-mobile'>
               <div className='level-left'>
                 <div className='level-item has-text-centered'>
-                  <p className='title is-5'>{eachPlant.plant[0].commonName}</p>
+                  <p className='title is-5'>{gardenPlant.plant[0].commonName}</p>
                 </div>
               </div>
               <div className='level-right'>
@@ -64,13 +61,15 @@ const GardenPlant = ({eachPlant, currentUser, getPlants}) => {
           </div>
 
           <footer className='card-footer'>
-            <Link to={`/your-garden/${eachPlant._id}`} className='card-footer-item'>
+            <Link
+              to={`/your-garden/${gardenPlant._id}`}
+              className='card-footer-item'>
               See Details
             </Link>
             <p
               className='card-footer-item'
               onClick={() =>
-                handleDelete(eachPlant._id, eachPlant.plant[0].commonName)
+                handleDelete(gardenPlant._id, gardenPlant.plant[0].commonName)
               }>
               Remove
             </p>

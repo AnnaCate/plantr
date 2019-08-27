@@ -1,13 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
+import NotesRow from './NotesRow';
 
-const Notes = ({
-  isEditing,
-  plantWithNotes,
-  handleChange,
-  handleCancel,
-  handleEdit,
-  handleSubmit,
-}) => {
+const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleChange = e => {
+    setPlantWithNotes({
+      ...plantWithNotes,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    axios.get(`/garden/details/${objectId}`).then(res => {
+      setPlantWithNotes(res.data.data);
+    });
+  };
+
+  const handleEdit = () => setIsEditing(true);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setIsEditing(false);
+
+    axios.put(`/garden/details/${objectId}`, {
+      variety: plantWithNotes.variety,
+      dateStartedIndoors: plantWithNotes.dateStartedIndoors,
+      dateDirectSowed: plantWithNotes.dateDirectSowed,
+      numSeedsSowed: plantWithNotes.numSeedsSowed,
+      numGerminated: plantWithNotes.numGerminated,
+      dateTransplanted: plantWithNotes.dateTransplanted,
+      numTransplanted: plantWithNotes.numTransplanted,
+      observations: plantWithNotes.observations,
+    });
+  };
+
   return (
     <>
       {plantWithNotes.length === 0 ? (
@@ -22,167 +51,62 @@ const Notes = ({
           </h1>
           <table className='table is-fullwidth'>
             <tbody>
-              <tr className='has-background-light'>
-                <th>Variety planted</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='variety'
-                      value={plantWithNotes.variety || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.variety || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to add a variety
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
-              <tr className='has-background-light'>
-                <th>Date seeds started (indoors)</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='dateStartedIndoors'
-                      value={plantWithNotes.dateStartedIndoors || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.dateStartedIndoors || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to input a date
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
-              <tr className='has-background-light'>
-                <th>Date seeds started (outdoors)</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='dateDirectSowed'
-                      value={plantWithNotes.dateDirectSowed || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.dateDirectSowed || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to input a date
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
-              <tr className='has-background-light'>
-                <th>Number of seeds sown</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='numSeedsSowed'
-                      value={plantWithNotes.numSeedsSowed || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.numSeedsSowed || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to input a number
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
-              <tr className='has-background-light'>
-                <th>Number of seeds that germinated</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='numGerminated'
-                      value={plantWithNotes.numGerminated || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.numGerminated || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to input a number
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
-              <tr className='has-background-light'>
-                <th>Date transplanted</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='dateTransplanted'
-                      value={plantWithNotes.dateTransplanted || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.dateTransplanted || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to input a date
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
-              <tr className='has-background-light'>
-                <th>Number of plants transplanted</th>
-                {isEditing && (
-                  <td>
-                    <input
-                      className='input is-small'
-                      type='text'
-                      name='numTransplanted'
-                      value={plantWithNotes.numTransplanted || ''}
-                      onChange={handleChange}
-                    />
-                  </td>
-                )}
-                {!isEditing && (
-                  <td>
-                    {plantWithNotes.numTransplanted || (
-                      <span className='is-italic has-text-grey'>
-                        Click "Edit" to input a number
-                      </span>
-                    )}
-                  </td>
-                )}
-              </tr>
+              <NotesRow
+                th={'Variety planted'}
+                isEditing={isEditing}
+                input={'variety'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
+              <NotesRow
+                th={'Date seeds started (indoors)'}
+                isEditing={isEditing}
+                input={'dateStartedIndoors'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
+              <NotesRow
+                th={'Date seeds started (outdoors)'}
+                isEditing={isEditing}
+                input={'dateDirectSowed'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
+              <NotesRow
+                th={'Number of seeds sown'}
+                isEditing={isEditing}
+                input={'numSeedsSowed'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
+              <NotesRow
+                th={'Number of seeds that germinated'}
+                isEditing={isEditing}
+                input={'numGerminated'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
+              <NotesRow
+                th={'Date transplanted'}
+                isEditing={isEditing}
+                input={'dateTransplanted'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
+              <NotesRow
+                th={'Number of plants transplanted'}
+                isEditing={isEditing}
+                input={'numTransplanted'}
+                handleChange={handleChange}
+                plant={plantWithNotes}
+              />
+
               <tr className='has-background-light'>
                 <th>Other notes</th>
                 {isEditing && (

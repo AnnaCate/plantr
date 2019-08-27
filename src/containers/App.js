@@ -83,11 +83,7 @@ const App = () => {
             path='/your-garden'
             currentUser={currentUser}
           />
-          <ProtectedRoute
-            component={PlantDetails}
-            path='/your-garden/:_id'
-            currentUser={currentUser}
-          />
+          <ProtectedRoute component={PlantDetails} path='/your-garden/:_id' />
         </Router>
       </div>
       <Footer />

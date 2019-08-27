@@ -9,10 +9,10 @@ const GardenPlants = ({plants, currentUser, getPlants}) => {
           // sort plants alphabetically by commonName
           .sort((a, b) => (a.plant[0].commonName > b.plant[0].commonName ? 1 : -1))
           // map over plants to return cards
-          .map(eachPlant => (
+          .map(gardenPlant => (
             <GardenPlant
-              eachPlant={eachPlant}
-              key={eachPlant._id}
+              gardenPlant={gardenPlant}
+              key={gardenPlant._id}
               currentUser={currentUser}
               getPlants={getPlants}
             />
