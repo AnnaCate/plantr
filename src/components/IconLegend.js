@@ -3,8 +3,10 @@ import React from 'react';
 const IconLegend = ({currentUser}) => {
   return (
     <div>
-      <span className='icon has-text-success'>
-        <i className='fas fa-check-circle' />
+      <span className='icon'>
+        <span role='img' aria-label='ok emoji' className='is-size-7'>
+          🆗
+        </span>
       </span>
       <span className='is-size-7'>
         = Suitable for Hardiness Zone {currentUser.hardinessZone}
