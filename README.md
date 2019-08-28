@@ -78,10 +78,9 @@ $ npm start
 
 ## Still to come
 
-- On `HomePage`, change `Plant it!` to a checkmark to indicate that it's already planted
 - Allow user to create/edit profile (username, email address, hardiness zone)
 - Refactor from `Promises` to `async/await`
-- Change alert method for successfully planting something vs when it's already planted
+- Refactor so that the array state of garden plants are in a parent element and passed to both `Garden` and `HomePage`, rather than called separately
 - Re-organize folders
 - Split `index.css` into component-specific files
 - Rename mongo database, and update `README` accordingly.

@@ -10,6 +10,7 @@ const HomePage = ({currentUser}) => {
   const [visiblePlants, setVisiblePlants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchIsActive, setSearchIsActive] = useState(false);
+  const [gardenPlants, setGardenPlants] = useState([]);
 
   // GET plants from plants API on component mount
   useEffect(() => {
@@ -32,6 +33,25 @@ const HomePage = ({currentUser}) => {
     setVisiblePlants(allPlants.slice((currentPage - 1) * 8, currentPage * 8));
   }, [currentPage, allPlants]);
 
+  const getGardenPlants = userId => {
+    if (!currentUser.loggedIn) {
+      setGardenPlants([]);
+      return;
+    }
+    axios
+      .get(`/garden/${userId}`)
+      .then(res => {
+        if (res.status === 200 && res.data.data) {
+          setGardenPlants(res.data.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  useEffect(() => {
+    getGardenPlants(currentUser._id);
+  }, [currentUser._id, currentUser.loggedIn]);
+
   return (
     <>
       <section className='section no-bottom-padding'>
@@ -53,7 +73,12 @@ const HomePage = ({currentUser}) => {
       </section>
 
       <section className='section'>
-        <PlantList plants={visiblePlants} currentUser={currentUser} />
+        <PlantList
+          plants={visiblePlants}
+          currentUser={currentUser}
+          gardenPlants={gardenPlants}
+          getGardenPlants={getGardenPlants}
+        />
       </section>
       {!searchIsActive && (
         <Pagination
