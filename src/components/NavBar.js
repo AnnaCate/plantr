@@ -70,7 +70,12 @@ const NavBar = ({currentUser, updateUser}) => {
         </div>
         <div className='navbar-end'>
           {currentUser.loggedIn && (
-            <div className='navbar-item'>Welcome, {currentUser.username}!</div>
+            <Link to={`/profile/${currentUser._id}`} className='navbar-item'>
+              <span>{`${currentUser.username}`} </span>
+              <span className='icon'>
+                <i className='fas fa-user is-size-5' />
+              </span>
+            </Link>
           )}
           <div className='navbar-item'>
             <div className='buttons'>

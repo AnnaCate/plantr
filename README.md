@@ -84,6 +84,7 @@ $ npm start
 - Re-organize folders
 - Split `index.css` into component-specific files
 - Rename mongo database, and update `README` accordingly.
+- Move Hardiness Info Modal to its own component
 
 ## Author
 

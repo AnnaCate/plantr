@@ -11,6 +11,7 @@ import About from './About';
 import PlantDetails from './PlantDetails';
 import Garden from './Garden';
 import Footer from '../components/Footer';
+import Profile from './Profile';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
@@ -83,6 +84,7 @@ const App = () => {
             currentUser={currentUser}
           />
           <ProtectedRoute component={PlantDetails} path='/your-garden/:_id' />
+          <ProtectedRoute component={Profile} path='/profile/:_id' />
         </Router>
       </div>
       <Footer />
