@@ -27,7 +27,6 @@ const App = () => {
 
   const getUser = () => {
     axios.get('/user/').then(response => {
-      console.log(response);
       if (response.data.user) {
         setCurrentUser({
           loggedIn: true,

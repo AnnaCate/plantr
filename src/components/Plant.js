@@ -3,7 +3,7 @@ import Modal from './Modal';
 import axios from 'axios';
 import {navigate} from '@reach/router';
 
-const Plant = ({plant, currentUser}) => {
+const Plant = ({plant, currentUser, getGardenPlants, gardenPlants}) => {
   const [isActive, setIsActive] = useState('');
 
   // update `is-active` state for  modal
@@ -19,7 +19,6 @@ const Plant = ({plant, currentUser}) => {
           })
           .then(response => {
             if (!response.data.error) {
-              // get plant name, in cases where a qualifier is listed after a comma
               const firstWord = commonName.split(',').shift();
               const verb =
                 firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
@@ -28,6 +27,7 @@ const Plant = ({plant, currentUser}) => {
               alert(response.data.error);
             }
           })
+          .then(() => getGardenPlants(userId))
           .catch(err => {
             console.log('Planting error: ');
             console.log(err);
@@ -40,6 +40,18 @@ const Plant = ({plant, currentUser}) => {
 
   const notSuitable = () =>
     plant.usdaHardinessZones.includes(currentUser.hardinessZone) ? 'is-hidden' : '';
+
+  const checkIfPlanted = commonName => {
+    if (gardenPlants.length > 0) {
+      const gardenPlantNames = gardenPlants.map(plant => plant.plant[0].commonName);
+      return gardenPlantNames.includes(commonName) ? (
+        <span>✔︎</span>
+      ) : (
+        <span>Plant it!</span>
+      );
+    }
+    return <span>Plant it!</span>;
+  };
 
   return (
     <>
@@ -84,7 +96,7 @@ const Plant = ({plant, currentUser}) => {
               onClick={() =>
                 handlePlantIt(plant.commonName, plant._id, currentUser._id)
               }>
-              Plant it!
+              {checkIfPlanted(plant.commonName)}
             </p>
           </footer>
         </div>

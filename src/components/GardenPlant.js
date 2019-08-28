@@ -11,6 +11,7 @@ const GardenPlant = ({gardenPlant, currentUser, getPlants}) => {
     if (confirm) {
       axios
         .delete(`/garden/${objectId}`)
+        .then(res => console.log(res))
         .then(() => getPlants(currentUser._id))
         .catch(err => console.log(err));
     }
