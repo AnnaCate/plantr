@@ -4,7 +4,7 @@ const IconLegend = ({currentUser}) => {
   return (
     <div>
       <span className='icon has-text-success'>
-        <i className='fas fa-check-square' />
+        <i className='fas fa-check-circle' />
       </span>
       <span className='is-size-7'>
         = Suitable for Hardiness Zone {currentUser.hardinessZone}

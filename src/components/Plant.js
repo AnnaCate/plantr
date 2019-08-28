@@ -45,7 +45,9 @@ const Plant = ({plant, currentUser, getGardenPlants, gardenPlants}) => {
     if (gardenPlants.length > 0) {
       const gardenPlantNames = gardenPlants.map(plant => plant.plant[0].commonName);
       return gardenPlantNames.includes(commonName) ? (
-        <span>✔︎</span>
+        <span className='icon'>
+          <i className='fas fa-check' />
+        </span>
       ) : (
         <span>Plant it!</span>
       );
@@ -77,7 +79,7 @@ const Plant = ({plant, currentUser, getGardenPlants, gardenPlants}) => {
               <div className={`level-right ${iconsVisibility()}`}>
                 <div className='level-item has-text-centered'>
                   <span className={`icon has-text-success ${suitable()}`}>
-                    <i className='fas fa-check-square' />
+                    <i className='fas fa-check-circle' />
                   </span>
                   <span className={`icon has-text-danger ${notSuitable()}`}>
                     <i className='fas fa-ban' />

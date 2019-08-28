@@ -51,7 +51,7 @@ const GardenPlant = ({gardenPlant, currentUser, getPlants}) => {
               <div className='level-right'>
                 <div className='level-item has-text-centered'>
                   <span className={`icon has-text-success ${suitable()}`}>
-                    <i className='fas fa-check-square' />
+                    <i className='fas fa-check-circle' />
                   </span>
                   <span className={`icon has-text-danger ${notSuitable()}`}>
                     <i className='fas fa-ban' />
