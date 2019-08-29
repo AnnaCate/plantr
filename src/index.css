@@ -6,9 +6,24 @@
 
 #site-content {
   flex: 1;
+  position: relative;
+  padding-bottom: 1.5em;
+}
+
+.button {
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+}
+
+.button.no-shadow {
+  box-shadow: none;
 }
 
 /* NavBar */
+
+.navbar {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.19);
+}
 
 .center-navbar-items {
   flex-grow: 1;
@@ -105,4 +120,47 @@
 
 #plant-details-header {
   padding-top: 24px;
+}
+
+/* Profile */
+.profile-text {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  height: 2.25em;
+  width: 100%;
+  padding: calc(0.375em - 1px) calc(0.625em - 1px);
+}
+
+div .field-body {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.field-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#hardiness-label {
+  min-width: 247px;
+}
+
+/* Pagination */
+.pagination-list {
+  display: flex;
+  justify-content: center;
+}
+
+/* testing out the following: */
+div.stick-to-bottom {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.stick-to-bottom div.column {
+  margin-left: 0;
 }

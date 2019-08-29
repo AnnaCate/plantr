@@ -32,6 +32,7 @@ const LogInForm = props => {
             username: response.data.username,
             _id: response.data._id,
             hardinessZone: response.data.hardinessZone,
+            email: response.data.email,
           });
           navigate('/your-garden');
         }
@@ -98,7 +99,7 @@ const LogInForm = props => {
                 </button>
               </div>
               <div className='control'>
-                <button className='button is-text' onClick={handleCancel}>
+                <button className='button is-text no-shadow' onClick={handleCancel}>
                   Cancel
                 </button>
               </div>

@@ -46,6 +46,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
     _id: req.user._id,
     username: req.user.username,
     hardinessZone: req.user.hardinessZone,
+    email: req.user.email,
   };
   res.send(userInfo);
 });
@@ -54,6 +55,17 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 router.get('/', (req, res) =>
   req.user ? res.json({user: req.user}) : res.json({user: null})
 );
+
+// UPDATE LOGGED IN USER
+router.put('/profile/:userId', (req, res) => {
+  const {hardinessZone} = req.body;
+
+  User.findById(req.params.userId).then(foundUser => {
+    foundUser.hardinessZone = hardinessZone;
+    foundUser.save();
+    res.json(foundUser);
+  });
+});
 
 // LOG OUT
 router.post('/logout', (req, res) => {

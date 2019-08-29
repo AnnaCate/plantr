@@ -1,33 +1,40 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import emailValidator from 'email-validator';
 
-const Profile = ({_id}) => {
-  const [user, setUser] = useState({
-    email: '',
+const Profile = ({user, setUser}) => {
+  const [newUserData, setNewUserData] = useState({
+    hardinessZone: user.hardinessZone,
+  });
+  const [defaultState, setDefaultState] = useState({
     hardinessZone: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
   });
   const [isActive, setIsActive] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   // validation states
-  const [emailIsValid, setEmailIsValid] = useState(true);
-  const [emailAvailable, setEmailAvailable] = useState(true);
   const [hardinessZoneIsValid, setHardinessZoneIsValid] = useState(true);
-  const [usernameAvailable, setUsernameAvailable] = useState(true);
-  const [passwordLengthOk, setPasswordLengthOk] = useState(true);
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  // useEffect(() => {
-  //   axios.get(`/users/${_id}`).then(res => setUser({...user,
-  //     email: res.data.data.email,
-  //     hardinessZone: res.data.data.hardinessZone,
-  //     username: res.data.data.username,
-  //   })).catch(err => console.log(err))
-  // }, [])
+  useEffect(() => {
+    // const getUser = () => {
+    //   axios
+    //     .get('/user/')
+    //     .then(response => {
+    //       if (response.data.user) {
+    //         setUser({
+    //           email: response.data.user.email,
+    //           hardinessZone: response.data.user.hardinessZone,
+    //           username: response.data.user.username,
+    //         });
+    setDefaultState({
+      hardinessZone: user.hardinessZone,
+    });
+    //       }
+    //     })
+    //     .catch(err => console.log(err));
+    // };
+
+    // getUser();
+  }, []);
 
   /**
    * Validate each input field
@@ -35,20 +42,10 @@ const Profile = ({_id}) => {
    */
   const validate = e => {
     switch (e.target.name) {
-      case 'email':
-        setEmailIsValid(emailValidator.validate(user.email));
-        setEmailAvailable(true);
-        break;
       case 'hardinessZone':
-        setHardinessZoneIsValid(user.hardinessZone >= 1 && user.hardinessZone <= 13);
-        break;
-      case 'username':
-        setUsernameAvailable(true);
-        break;
-      case 'password':
-      case 'confirmPassword':
-        setPasswordsMatch(user.password === user.confirmPassword);
-        setPasswordLengthOk(user.password.length >= 8);
+        setHardinessZoneIsValid(
+          newUserData.hardinessZone >= 1 && newUserData.hardinessZone <= 13
+        );
         break;
     }
   };
@@ -65,55 +62,35 @@ const Profile = ({_id}) => {
    * @return {Boolean}
    */
   const checkCompletion = () =>
-    user.email === '' ||
-    user.hardinessZone === '' ||
-    user.username === '' ||
-    !emailAvailable ||
-    !emailIsValid ||
-    !hardinessZoneIsValid ||
-    !usernameAvailable;
+    isEditing && (newUserData.hardinessZone === '' || !hardinessZoneIsValid);
 
-  const handleChange = e => setUser({...user, [e.target.name]: e.target.value});
+  const handleChange = e =>
+    setNewUserData({...newUserData, [e.target.name]: e.target.value});
+
+  const handleEdit = e => {
+    e.preventDefault();
+
+    setIsEditing(true);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('submitted');
-    // axios
-    //   .put(`/user/${_id}`, {
-    //     username: user.username,
-    //     email: user.email,
-    //     hardinessZone: user.hardinessZone,
-    //   })
-    //   .then(res => {
-    //     if (!res.data.error) {
-    //       setIsEditing(false)
-    //     } else if (res.data.error === `The email ${user.email} is already in use.`) {
-    //       setEmailAvailable(false);
-    //     } else if (
-    //       res.data.error === `Sorry, username ${user.username} is already in use.`
-    //     ) {
-    //       setUsernameAvailable(false);
-    //     }
-    //   })
-    //   .catch(err => console.error(err));
+    axios
+      .put(`/user/profile/${user._id}`, {
+        hardinessZone: newUserData.hardinessZone,
+      })
+      .then(response => console.log(response))
+      .then(() => setIsEditing(false))
+      .then(() => setUser({...user, hardinessZone: newUserData.hardinessZone}))
+      .catch(err => console.log(err));
   };
 
-  const handleCancel = () => {
-    console.log('cancelled');
-    setIsEditing(false);
-    // setUser({
-    //   email: '',
-    //   hardinessZone: '',
-    //   username: '',
-    //   password: '',
-    //   confirmPassword: '',
-    // });
-    // setEmailAvailable(true);
-    // setHardinessZoneIsValid(true);
-    // setEmailIsValid(true);
-    // setUsernameAvailable(true);
+  const handleCancel = e => {
+    e.preventDefault();
 
-    // navigate('/');
+    setNewUserData(defaultState);
+    setIsEditing(false);
+    setHardinessZoneIsValid(true);
   };
 
   const handleInfoClick = e => setIsActive(!isActive);
@@ -127,90 +104,96 @@ const Profile = ({_id}) => {
           <div className='column is-one-third is-offset-one-third'>
             <header className='title has-text-centered'>Your Profile</header>
 
-            <form>
-              <div className='field'>
-                <div className='control'>
-                  <label className='label'>Email:</label>
-                  <input
-                    className='input'
-                    type='email'
-                    name='email'
-                    autoComplete='email'
-                    value={user.email}
-                    onChange={handleChange}
-                    onBlur={validate}
-                  />
-                </div>
-                <p className={`help is-danger ${showOrHide(emailIsValid)}`}>
-                  Please enter a valid email address.
-                </p>
-                <p className={`help is-danger ${showOrHide(emailAvailable)}`}>
-                  Email address is already in use.
-                </p>
+            <div className='field is-horizontal'>
+              <div className='field-label'>
+                <label className='label'>Email:</label>
               </div>
-
-              <div className='field'>
-                <div className='control'>
-                  <label className='label'>Username:</label>
-                  <input
-                    className='input'
-                    type='text'
-                    name='username'
-                    autoComplete='username'
-                    value={user.username}
-                    onChange={handleChange}
-                    onBlur={validate}
-                  />
-                </div>
-                <p className={`help is-danger ${showOrHide(usernameAvailable)}`}>
-                  Username is already taken.
-                </p>
+              <div className='field-body'>
+                <p className='profile-text'>{user.email}</p>
               </div>
+            </div>
 
-              <div className='field'>
-                <div className='control'>
-                  <label className='label'>
-                    USDA Plant Hardiness Zone:{' '}
-                    <span
-                      id='info'
-                      className='icon has-text-grey-light'
-                      onClick={handleInfoClick}>
-                      <i className='fas fa-info-circle' />
-                    </span>
-                  </label>
-                  <input
-                    className='input'
-                    type='text'
-                    name='hardinessZone'
-                    placeholder='Enter a value 1 through 13'
-                    value={user.hardinessZone}
-                    onChange={handleChange}
-                    onBlur={validate}
-                  />
-                </div>
-                <p className={`help is-danger ${showOrHide(hardinessZoneIsValid)}`}>
-                  Please enter a valid number 1 through 13.
-                </p>
+            <div className='field is-horizontal'>
+              <div className='field-label'>
+                <label className='label'>Username:</label>
               </div>
+              <div className='field-body'>
+                <p className='profile-text'>{user.username}</p>
+              </div>
+            </div>
 
-              <div className='field is-grouped is-grouped-centered'>
+            <div className='field is-horizontal'>
+              <div id='hardiness-label' className='field-label'>
+                <label className='label'>
+                  USDA Plant Hardiness Zone:{' '}
+                  <span
+                    id='info'
+                    className='icon has-text-grey-light'
+                    onClick={handleInfoClick}>
+                    <i className='fas fa-info-circle' />
+                  </span>
+                </label>
+              </div>
+              <div className='field-body'>
+                {!isEditing && (
+                  <p id='hardiness-text' className='profile-text'>
+                    {user.hardinessZone}
+                  </p>
+                )}
+                {isEditing && (
+                  <div className='field'>
+                    <p className='control'>
+                      <input
+                        className='input'
+                        type='text'
+                        name='hardinessZone'
+                        placeholder='Enter a value 1 through 13'
+                        value={newUserData.hardinessZone}
+                        onChange={handleChange}
+                        onBlur={validate}
+                      />
+                      <span
+                        className={`help is-danger ${showOrHide(
+                          hardinessZoneIsValid
+                        )}`}>
+                        Please enter a valid number 1 through 13.
+                      </span>
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className='field is-grouped is-grouped-right'>
+              {isEditing && (
                 <div className='control'>
                   <button
-                    className='button is-primary'
-                    type='submit'
-                    onClick={handleSubmit}
-                    disabled={checkCompletion()}>
-                    {isEditing && 'Save'}
-                    {!isEditing && 'Edit'}
-                  </button>
-                </div>
-                <div className='control'>
-                  <button className='button is-text' onClick={handleCancel}>
+                    className='button is-text no-shadow'
+                    onClick={handleCancel}>
                     Cancel
                   </button>
                 </div>
+              )}
+              <div className='control'>
+                {isEditing && (
+                  <input
+                    className='button is-primary'
+                    type='submit'
+                    value='Save'
+                    disabled={checkCompletion()}
+                    onClick={handleSubmit}
+                  />
+                )}
+                {!isEditing && (
+                  <button
+                    className='button is-primary'
+                    type='button'
+                    onClick={handleEdit}>
+                    Edit
+                  </button>
+                )}
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </section>

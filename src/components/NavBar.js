@@ -22,6 +22,7 @@ const NavBar = ({currentUser, updateUser}) => {
             username: null,
             _id: null,
             hardinessZone: null,
+            email: null,
           });
         }
       })
@@ -80,7 +81,7 @@ const NavBar = ({currentUser, updateUser}) => {
           <div className='navbar-item'>
             <div className='buttons'>
               {!currentUser.loggedIn && (
-                <Link to='/signup' className='button is-primary'>
+                <Link to='/signup' className='button is-primary no-shadow'>
                   <strong>Sign up</strong>
                 </Link>
               )}

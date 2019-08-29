@@ -19,6 +19,7 @@ const App = () => {
     username: null,
     _id: null,
     hardinessZone: null,
+    email: null,
   });
 
   // get logged in user when component mounts
@@ -34,6 +35,7 @@ const App = () => {
           username: response.data.user.username,
           _id: response.data.user._id,
           hardinessZone: response.data.user.hardinessZone,
+          email: response.data.user.email,
         });
       } else {
         setCurrentUser({
@@ -41,6 +43,7 @@ const App = () => {
           username: null,
           _id: null,
           hardinessZone: null,
+          email: null,
         });
       }
     });
@@ -84,7 +87,12 @@ const App = () => {
             currentUser={currentUser}
           />
           <ProtectedRoute component={PlantDetails} path='/your-garden/:_id' />
-          <ProtectedRoute component={Profile} path='/profile/:_id' />
+          <ProtectedRoute
+            component={Profile}
+            path='/profile/:userId'
+            user={currentUser}
+            setUser={setCurrentUser}
+          />
         </Router>
       </div>
       <Footer />

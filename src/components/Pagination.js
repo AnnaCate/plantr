@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
 
-/** 🚨Need to add ellipses for lots of page numbers */
-
 const Pagination = ({allPlantsLength, currentPage, setCurrentPage}) => {
   const [pageNumbers, setPageNumbers] = useState([]);
 
@@ -11,25 +9,25 @@ const Pagination = ({allPlantsLength, currentPage, setCurrentPage}) => {
     }
   }, [allPlantsLength]);
 
-  const makeActive = number =>
-    number === currentPage ? 'has-background-grey-lighter' : '';
+  const makeActive = number => (number === currentPage ? 'is-current' : '');
 
   return (
-    <div className='columns'>
-      <div className='column' />
-      <nav>
-        <ul className='column margin-bottom'>
-          {pageNumbers.map(number => (
-            <li
-              className={`button is-inline ${makeActive(number)}`}
-              key={number}
-              onClick={() => setCurrentPage(number)}>
-              {number}
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className='column' />
+    <div className='columns stick-to-bottom'>
+      <div className='column is-one-third is-offset-one-third'>
+        <nav className='pagination' role='navigation' aria-label='pagination'>
+          <ul className='pagination-list'>
+            {pageNumbers.map(number => (
+              <li
+                key={number}
+                className={`pagination-link ${makeActive(number)}`}
+                aria-label={`Page ${number}`}
+                onClick={() => setCurrentPage(number)}>
+                {number}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

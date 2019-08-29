@@ -240,7 +240,9 @@ const SignupForm = () => {
                   </button>
                 </div>
                 <div className='control'>
-                  <button className='button is-text' onClick={handleCancel}>
+                  <button
+                    className='button is-text no-shadow'
+                    onClick={handleCancel}>
                     Cancel
                   </button>
                 </div>
