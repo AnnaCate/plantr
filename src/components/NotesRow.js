@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotesRow = ({th, isEditing, input, handleChange, plant}) => {
+const NotesRow = ({th, isEditing, input, handleChange, plant, newPlant}) => {
   return (
     <tr className='has-background-light'>
       <th>{th}</th>
@@ -10,7 +10,7 @@ const NotesRow = ({th, isEditing, input, handleChange, plant}) => {
             className='input is-small'
             type='text'
             name={`${input}`}
-            value={plant[input] || ''}
+            value={newPlant[input] || ''}
             onChange={handleChange}
           />
         </td>

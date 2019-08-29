@@ -1,31 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import NotesRow from './NotesRow';
 
 const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [newPlantNotes, setNewPlantNotes] = useState({
+    variety: '',
+    dateStartedIndoors: '',
+    dateDirectSowed: '',
+    numSeedsSowed: '',
+    numGerminated: '',
+    dateTransplanted: '',
+    numTransplanted: '',
+    observations: '',
+  });
 
   const handleChange = e => {
-    setPlantWithNotes({
-      ...plantWithNotes,
+    setNewPlantNotes({
+      ...newPlantNotes,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    axios.get(`/garden/details/${objectId}`).then(res => {
-      setPlantWithNotes(res.data.data);
-    });
-  };
-
-  const handleEdit = () => setIsEditing(true);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setIsEditing(false);
-
-    axios.put(`/garden/details/${objectId}`, {
+  const updateNewPlantNotes = () =>
+    setNewPlantNotes({
       variety: plantWithNotes.variety,
       dateStartedIndoors: plantWithNotes.dateStartedIndoors,
       dateDirectSowed: plantWithNotes.dateDirectSowed,
@@ -35,6 +33,45 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
       numTransplanted: plantWithNotes.numTransplanted,
       observations: plantWithNotes.observations,
     });
+
+  const handleCancel = e => {
+    e.preventDefault();
+
+    updateNewPlantNotes();
+    setIsEditing(false);
+  };
+
+  const handleEdit = e => {
+    e.preventDefault();
+
+    updateNewPlantNotes();
+    setIsEditing(true);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    axios
+      .put(`/garden/details/${objectId}`, newPlantNotes)
+      .then(res => {
+        if (res.status === 200) {
+          setPlantWithNotes(res.data.data);
+        }
+      })
+      // .then(() =>
+      //   setPlantWithNotes({
+      //     variety: newPlantNotes.variety,
+      //     dateStartedIndoors: newPlantNotes.dateStartedIndoors,
+      //     dateDirectSowed: newPlantNotes.dateDirectSowed,
+      //     numSeedsSowed: newPlantNotes.numSeedsSowed,
+      //     numGerminated: newPlantNotes.numGerminated,
+      //     dateTransplanted: newPlantNotes.dateTransplanted,
+      //     numTransplanted: newPlantNotes.numTransplanted,
+      //     observations: newPlantNotes.observations,
+      //   })
+      // )
+      .then(() => setIsEditing(false))
+      .catch(err => console.log(err));
   };
 
   return (
@@ -57,6 +94,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'variety'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <NotesRow
@@ -65,6 +103,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'dateStartedIndoors'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <NotesRow
@@ -73,6 +112,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'dateDirectSowed'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <NotesRow
@@ -81,6 +121,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'numSeedsSowed'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <NotesRow
@@ -89,6 +130,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'numGerminated'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <NotesRow
@@ -97,6 +139,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'dateTransplanted'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <NotesRow
@@ -105,6 +148,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                 input={'numTransplanted'}
                 handleChange={handleChange}
                 plant={plantWithNotes}
+                newPlant={newPlantNotes}
               />
 
               <tr className='has-background-light'>
@@ -114,7 +158,7 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
                     <textarea
                       className='textarea is-small'
                       name='observations'
-                      value={plantWithNotes.observations || ''}
+                      value={newPlantNotes.observations || ''}
                       onChange={handleChange}
                       wrap='hard'
                     />
