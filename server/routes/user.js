@@ -57,6 +57,11 @@ router.get('/', (req, res) =>
 );
 
 // UPDATE LOGGED IN USER
+/** 🚨This isn't working quite right.
+ * You can update the hardiness zone, but then once you log out,
+ * you can't log back in under the same user.
+ **/
+
 router.put('/profile/:userId', (req, res) => {
   const {hardinessZone} = req.body;
 

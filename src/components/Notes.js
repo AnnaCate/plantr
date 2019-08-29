@@ -58,18 +58,6 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
           setPlantWithNotes(res.data.data);
         }
       })
-      // .then(() =>
-      //   setPlantWithNotes({
-      //     variety: newPlantNotes.variety,
-      //     dateStartedIndoors: newPlantNotes.dateStartedIndoors,
-      //     dateDirectSowed: newPlantNotes.dateDirectSowed,
-      //     numSeedsSowed: newPlantNotes.numSeedsSowed,
-      //     numGerminated: newPlantNotes.numGerminated,
-      //     dateTransplanted: newPlantNotes.dateTransplanted,
-      //     numTransplanted: newPlantNotes.numTransplanted,
-      //     observations: newPlantNotes.observations,
-      //   })
-      // )
       .then(() => setIsEditing(false))
       .catch(err => console.log(err));
   };

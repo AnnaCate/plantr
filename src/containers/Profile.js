@@ -14,27 +14,7 @@ const Profile = ({user, setUser}) => {
   // validation states
   const [hardinessZoneIsValid, setHardinessZoneIsValid] = useState(true);
 
-  useEffect(() => {
-    // const getUser = () => {
-    //   axios
-    //     .get('/user/')
-    //     .then(response => {
-    //       if (response.data.user) {
-    //         setUser({
-    //           email: response.data.user.email,
-    //           hardinessZone: response.data.user.hardinessZone,
-    //           username: response.data.user.username,
-    //         });
-    setDefaultState({
-      hardinessZone: user.hardinessZone,
-    });
-    //       }
-    //     })
-    //     .catch(err => console.log(err));
-    // };
-
-    // getUser();
-  }, []);
+  useEffect(() => setDefaultState({hardinessZone: user.hardinessZone}), []);
 
   /**
    * Validate each input field
