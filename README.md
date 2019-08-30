@@ -45,7 +45,7 @@ $ mongod
 $ mongo
 ```
 
-4. In the mongo shell, use the `flora-files` db
+4. In the mongo shell, use the db called `flora-files`
 
 ```
 > use flora-files
@@ -82,8 +82,8 @@ $ npm start
 - Refactor so that the array state of garden plants are in a parent element and passed to both `Garden` and `HomePage`, rather than called separately
 - Re-organize folders
 - Split `index.css` into component-specific files
-- Rename mongo database, and update `README` accordingly.
 - Move Hardiness Info Modal to its own component
+- Allow user to edit email and username in `Profile`
 
 ## Author
 

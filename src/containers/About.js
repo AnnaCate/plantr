@@ -12,10 +12,12 @@ const About = () => {
           <li>Browse and search for plants that you're interested in growing.</li>
           <li>
             Quickly see which plants are or are not suited for your USDA Plant
-            Hardiness Zone by checking for the{' '}
-            <span className='icon has-text-success'>
-              <i className='fas fa-check-square' />
-            </span>{' '}
+            Hardiness Zone by checking for the
+            <span className='icon'>
+              <span role='img' aria-label='ok emoji' className='is-size-7'>
+                🆗
+              </span>
+            </span>
             and
             <span className='icon has-text-danger'>
               <i className='fas fa-ban' />

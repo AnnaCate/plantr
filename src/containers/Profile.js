@@ -14,21 +14,18 @@ const Profile = ({user, setUser}) => {
   // validation states
   const [hardinessZoneIsValid, setHardinessZoneIsValid] = useState(true);
 
-  useEffect(() => setDefaultState({hardinessZone: user.hardinessZone}), []);
+  useEffect(() => setDefaultState({hardinessZone: user.hardinessZone}), [
+    user.hardinessZone,
+  ]);
 
   /**
    * Validate each input field
    * @param {Event} e onBlur event
    */
-  const validate = e => {
-    switch (e.target.name) {
-      case 'hardinessZone':
-        setHardinessZoneIsValid(
-          newUserData.hardinessZone >= 1 && newUserData.hardinessZone <= 13
-        );
-        break;
-    }
-  };
+  const validate = () =>
+    setHardinessZoneIsValid(
+      newUserData.hardinessZone >= 1 && newUserData.hardinessZone <= 13
+    );
 
   /**
    * Return appropriate class name dependong on input

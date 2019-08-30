@@ -6,6 +6,7 @@ mongoose
   .connect(uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => console.log('Connected to Mongo'))
   .catch(err => {

@@ -43,6 +43,8 @@ const SignupForm = () => {
         setPasswordsMatch(user.password === user.confirmPassword);
         setPasswordLengthOk(user.password.length >= 8);
         break;
+      default:
+        break;
     }
   };
 

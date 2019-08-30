@@ -145,6 +145,8 @@ div .field-body {
 
 #hardiness-label {
   min-width: 247px;
+  align-items: flex-start;
+  padding-top: 0.3em;
 }
 
 /* Pagination */
