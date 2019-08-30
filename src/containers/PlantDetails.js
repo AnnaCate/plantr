@@ -18,16 +18,19 @@ const PlantDetails = ({_id}) => {
   const [plantInView, setPlantInView] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`/garden/details/${_id}`)
-      .then(res => {
-        setPlantInView(res.data.data.plant[0]);
-        return res;
-      })
-      .then(res => {
-        setPlantWithNotes(res.data.data);
-      })
-      .catch(err => console.log(err));
+    const fetchPlant = async id => {
+      try {
+        const response = await axios.get(`/garden/details/${id}`);
+        if (response.status === 200) {
+          setPlantInView(response.data.data.plant[0]);
+          setPlantWithNotes(response.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPlant(_id);
   }, [_id]);
 
   return (

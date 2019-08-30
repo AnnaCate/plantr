@@ -7,15 +7,15 @@ import IconLegend from '../components/IconLegend';
 const Garden = ({currentUser}) => {
   const [plants, setPlants] = useState([]);
 
-  const getPlants = userId => {
-    axios
-      .get(`/garden/${userId}`)
-      .then(res => {
-        if (res.status === 200 && res.data.data) {
-          setPlants(res.data.data);
-        }
-      })
-      .catch(err => console.log(err));
+  const getPlants = async userId => {
+    try {
+      const response = await axios.get(`/garden/${userId}`);
+      if (response.status === 200 && response.data.data) {
+        setPlants(response.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

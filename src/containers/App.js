@@ -23,31 +23,35 @@ const App = () => {
   });
 
   // get logged in user when component mounts
-  useEffect(() => getUser(), []);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get('/user/');
+        if (response.data.user) {
+          setCurrentUser({
+            loggedIn: true,
+            username: response.data.user.username,
+            _id: response.data.user._id,
+            hardinessZone: response.data.user.hardinessZone,
+            email: response.data.user.email,
+          });
+        } else {
+          setCurrentUser({
+            loggedIn: false,
+            username: null,
+            _id: null,
+            hardinessZone: null,
+            email: null,
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, []);
 
   const updateUser = userObject => setCurrentUser(userObject);
-
-  const getUser = () => {
-    axios.get('/user/').then(response => {
-      if (response.data.user) {
-        setCurrentUser({
-          loggedIn: true,
-          username: response.data.user.username,
-          _id: response.data.user._id,
-          hardinessZone: response.data.user.hardinessZone,
-          email: response.data.user.email,
-        });
-      } else {
-        setCurrentUser({
-          loggedIn: false,
-          username: null,
-          _id: null,
-          hardinessZone: null,
-          email: null,
-        });
-      }
-    });
-  };
 
   // function to redirect user to log in if they try to access
   // a protected component

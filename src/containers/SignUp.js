@@ -74,28 +74,30 @@ const SignupForm = () => {
 
   const handleChange = e => setUser({...user, [e.target.name]: e.target.value});
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    axios
-      .post('/user/', {
+    try {
+      const response = await axios.post('/user/', {
         username: user.username,
         password: user.password,
         email: user.email,
         hardinessZone: user.hardinessZone,
-      })
-      .then(res => {
-        if (!res.data.error) {
-          navigate('/login');
-        } else if (res.data.error === `The email ${user.email} is already in use.`) {
-          setEmailAvailable(false);
-        } else if (
-          res.data.error === `Sorry, username ${user.username} is already in use.`
-        ) {
-          setUsernameAvailable(false);
-        }
-      })
-      .catch(err => console.error(err));
+      });
+      if (!response.data.error) {
+        navigate('/login');
+      } else if (
+        response.data.error === `The email ${user.email} is already in use.`
+      ) {
+        setEmailAvailable(false);
+      } else if (
+        response.data.error === `Sorry, username ${user.username} is already in use.`
+      ) {
+        setUsernameAvailable(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleCancel = () => {

@@ -48,18 +48,18 @@ const Notes = ({plantWithNotes, setPlantWithNotes, objectId}) => {
     setIsEditing(true);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    axios
-      .put(`/garden/details/${objectId}`, newPlantNotes)
-      .then(res => {
-        if (res.status === 200) {
-          setPlantWithNotes(res.data.data);
-        }
-      })
-      .then(() => setIsEditing(false))
-      .catch(err => console.log(err));
+    try {
+      const response = await axios.put(`/garden/details/${objectId}`, newPlantNotes);
+      if (response.status === 200) {
+        setPlantWithNotes(response.data.data);
+      }
+      setIsEditing(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

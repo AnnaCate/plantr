@@ -50,16 +50,19 @@ const Profile = ({user, setUser}) => {
     setIsEditing(true);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    axios
-      .put(`/user/profile`, {
+    try {
+      const response = await axios.put('/user/profile', {
         hardinessZone: newUserData.hardinessZone,
-      })
-      .then(response => console.log(response))
-      .then(() => setIsEditing(false))
-      .then(() => setUser({...user, hardinessZone: newUserData.hardinessZone}))
-      .catch(err => console.log(err));
+      });
+      if (response.status === 200) {
+        setIsEditing(false);
+        setUser({...user, hardinessZone: newUserData.hardinessZone});
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleCancel = e => {

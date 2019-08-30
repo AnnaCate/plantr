@@ -3,17 +3,20 @@ import {Link} from '@reach/router';
 import axios from 'axios';
 
 const GardenPlant = ({gardenPlant, currentUser, getPlants}) => {
-  const handleDelete = (objectId, plantName) => {
+  const handleDelete = async (objectId, plantName) => {
     const confirm = window.confirm(
       `Are you sure you want to remove ${plantName} from your garden? All of your notes about it will be lost forever.`
     );
 
     if (confirm) {
-      axios
-        .delete(`/garden/${objectId}`)
-        .then(res => console.log(res))
-        .then(() => getPlants(currentUser._id))
-        .catch(err => console.log(err));
+      try {
+        const response = await axios.delete(`/garden/${objectId}`);
+        if (response) {
+          getPlants(currentUser._id);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

@@ -10,24 +10,23 @@ const NavBar = ({currentUser, updateUser}) => {
     isActive ? setIsActive('') : setIsActive('is-active');
 
   // log out function
-  const logout = e => {
+  const logout = async e => {
     e.preventDefault();
-
-    axios
-      .post('/user/logout')
-      .then(response => {
-        if (response.status === 200) {
-          updateUser({
-            loggedIn: false,
-            username: null,
-            _id: null,
-            hardinessZone: null,
-            email: null,
-          });
-        }
-      })
-      .then(() => navigate('/'))
-      .catch(err => console.log(err));
+    try {
+      const response = await axios.post('/user/logout');
+      if (response.status === 200) {
+        updateUser({
+          loggedIn: false,
+          username: null,
+          _id: null,
+          hardinessZone: null,
+          email: null,
+        });
+      }
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

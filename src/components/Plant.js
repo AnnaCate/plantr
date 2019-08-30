@@ -9,29 +9,30 @@ const Plant = ({plant, currentUser, getGardenPlants, gardenPlants}) => {
   // update `is-active` state for  modal
   const toggleActive = () => (isActive ? setIsActive('') : setIsActive('is-active'));
 
-  const handlePlantIt = (commonName, plantId, userId) => {
-    !currentUser.loggedIn
-      ? navigate('/login')
-      : axios
-          .post('/garden/', {
-            user: userId,
-            plant: plantId,
-          })
-          .then(response => {
-            if (!response.data.error) {
-              const firstWord = commonName.split(',').shift();
-              const verb =
-                firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
-              alert(`${commonName} ${verb} added to Your Garden!`);
-            } else {
-              alert(response.data.error);
-            }
-          })
-          .then(() => getGardenPlants(userId))
-          .catch(err => {
-            console.log('Planting error: ');
-            console.log(err);
-          });
+  const handlePlantIt = async (commonName, plantId, userId) => {
+    if (!currentUser.loggedIn) {
+      navigate('/login');
+    } else {
+      try {
+        const response = await axios.post('/garden/', {
+          user: userId,
+          plant: plantId,
+        });
+        if (!response.data.error) {
+          const firstWord = commonName.split(',').shift();
+          const verb =
+            firstWord.substr(firstWord.length - 1) === 's' ? 'were' : 'was';
+          alert(`${commonName} ${verb} added to Your Garden!`);
+        } else {
+          alert(response.data.error);
+        }
+        if (response) {
+          getGardenPlants(userId);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const iconsVisibility = () => (currentUser.loggedIn ? '' : 'is-hidden');

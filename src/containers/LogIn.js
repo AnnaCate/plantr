@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {navigate} from '@reach/router';
 import axios from 'axios';
 
-const LogInForm = props => {
+const LogInForm = ({updateUser}) => {
   const [user, setUser] = useState({
     username: '',
     password: '',
@@ -16,31 +16,31 @@ const LogInForm = props => {
     setIsValid(true);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    // POST request to server
-    axios
-      .post('/user/login', {
+    try {
+      const response = await axios.post('/user/login', {
         username: user.username,
         password: user.password,
-      })
-      .then(response => {
-        if (response.status === 200) {
-          props.updateUser({
-            loggedIn: true,
-            username: response.data.username,
-            _id: response.data._id,
-            hardinessZone: response.data.hardinessZone,
-            email: response.data.email,
-          });
-          navigate('/your-garden');
-        }
-      })
-      .catch(() => setIsValid(false));
+      });
+      if (response.status === 200) {
+        updateUser({
+          loggedIn: true,
+          username: response.data.username,
+          _id: response.data._id,
+          hardinessZone: response.data.hardinessZone,
+          email: response.data.email,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      setIsValid(false);
+    }
   };
 
-  const handleCancel = () => {
+  const handleCancel = e => {
+    e.preventDefault();
     setUser({
       username: '',
       password: '',

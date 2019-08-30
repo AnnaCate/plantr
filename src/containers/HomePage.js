@@ -12,20 +12,25 @@ const HomePage = ({currentUser}) => {
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [gardenPlants, setGardenPlants] = useState([]);
 
-  // GET plants from plants API on component mount
+  // GET plants from plants API on render
   useEffect(() => {
-    axios
-      .get('/plants')
-      .then(res => {
+    const fetchPlants = async () => {
+      try {
+        const response = await axios.get('/plants');
+
         // set all plants in alphabetical order by commonName
-        setAllPlants(
-          res.data.data.sort((a, b) => (a.commonName > b.commonName ? 1 : -1))
+        const plants = response.data.data.sort((a, b) =>
+          a.commonName > b.commonName ? 1 : -1
         );
-        return res.data.data;
-      })
-      // set first 8 plants as visiblePlants
-      .then(res => setVisiblePlants(res.slice(0, 8)))
-      .catch(err => console.log(err));
+        setAllPlants(plants);
+
+        // set first 8 plants as visiblePlants
+        setVisiblePlants(plants.slice(0, 8));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPlants();
   }, []);
 
   // paginate plants, 8 per page, depending on currentPage
@@ -33,19 +38,19 @@ const HomePage = ({currentUser}) => {
     setVisiblePlants(allPlants.slice((currentPage - 1) * 8, currentPage * 8));
   }, [currentPage, allPlants]);
 
-  const getGardenPlants = userId => {
+  const getGardenPlants = async userId => {
     if (!currentUser.loggedIn) {
       setGardenPlants([]);
       return;
     }
-    axios
-      .get(`/garden/${userId}`)
-      .then(res => {
-        if (res.status === 200 && res.data.data) {
-          setGardenPlants(res.data.data);
-        }
-      })
-      .catch(err => console.log(err));
+    try {
+      const response = await axios.get(`/garden/${userId}`);
+      if (response.status === 200 && response.data.data) {
+        setGardenPlants(response.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

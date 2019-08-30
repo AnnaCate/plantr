@@ -3,15 +3,15 @@ const router = express.Router();
 const Plant = require('../database/models/plant');
 
 // GET ALL PLANTS
-router.get('/', (req, res) => {
-  Plant.find({}).then(plants => res.json({status: 'ok', data: plants}));
+router.get('/', async (req, res) => {
+  const plants = await Plant.find({});
+  res.json({status: 'ok', data: plants});
 });
 
 // GET PLANT BY ID
-router.get('/:id', (req, res) => {
-  Plant.findOne({_id: req.params.id}, (err, foundPlant) =>
-    res.json({status: 'ok', plant: foundPlant})
-  );
-});
+// router.get('/:id', async (req, res) => {
+//   const plant = await Plant.findOne({_id: req.params.id}).exec();
+//   res.json({status: 'ok', plant: plant});
+// });
 
 module.exports = router;
