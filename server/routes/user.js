@@ -42,13 +42,10 @@ router.post('/', (req, res) => {
 
 // LOG IN
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  const userInfo = {
-    _id: req.user._id,
-    username: req.user.username,
-    hardinessZone: req.user.hardinessZone,
-    email: req.user.email,
-  };
-  res.send(userInfo);
+  req.logIn(req.user, err => {
+    if (err) res.json({msg: err});
+  });
+  res.send(req.user);
 });
 
 // GET LOGGED IN USER
@@ -57,24 +54,17 @@ router.get('/', (req, res) =>
 );
 
 // UPDATE LOGGED IN USER
-/** 🚨This isn't working quite right.
- * You can update the hardiness zone, but then once you log out,
- * you can't log back in under the same user.
- **/
-
-router.put('/profile/:userId', (req, res) => {
-  const {hardinessZone} = req.body;
-
-  User.findById(req.params.userId).then(foundUser => {
-    foundUser.hardinessZone = hardinessZone;
-    foundUser.save();
-    res.json(foundUser);
+router.put('/profile', (req, res) => {
+  User.findOneAndUpdate({_id: req.session.passport.user}, req.body, (err, user) => {
+    if (err) console.log(err);
+    return res.json(user);
   });
 });
 
 // LOG OUT
 router.post('/logout', (req, res) => {
   if (req.user) {
+    console.log('logging out');
     req.logout();
     res.send({msg: 'logging out'});
   } else res.send({msg: 'no user to log out'});

@@ -56,7 +56,7 @@ const Profile = ({user, setUser}) => {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .put(`/user/profile/${user._id}`, {
+      .put(`/user/profile`, {
         hardinessZone: newUserData.hardinessZone,
       })
       .then(response => console.log(response))

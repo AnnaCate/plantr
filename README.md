@@ -78,7 +78,6 @@ $ npm start
 
 ## Still to come
 
-- Allow user to create/edit profile (username, email address, hardiness zone)
 - Refactor from `Promises` to `async/await`
 - Refactor so that the array state of garden plants are in a parent element and passed to both `Garden` and `HomePage`, rather than called separately
 - Re-organize folders
