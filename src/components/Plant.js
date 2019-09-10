@@ -80,7 +80,7 @@ const Plant = ({plant, currentUser, getGardenPlants, gardenPlants}) => {
               <div className={`level-right ${iconsVisibility()}`}>
                 <div className='level-item has-text-centered'>
                   <span className={`icon ${suitable()}`}>
-                    <span role='img' aria-label='ok emoji' className='is-size-7'>
+                    <span role='img' aria-label='ok emoji' className='is-size-6'>
                       🆗
                     </span>
                   </span>

@@ -12,9 +12,9 @@ const About = () => {
           <li>Browse and search for plants that you're interested in growing.</li>
           <li>
             Quickly see which plants are or are not suited for your USDA Plant
-            Hardiness Zone by checking for the
+            Hardiness Zone by checking for the{' '}
             <span className='icon'>
-              <span role='img' aria-label='ok emoji' className='is-size-7'>
+              <span role='img' aria-label='ok emoji' className='is-size-6'>
                 🆗
               </span>
             </span>

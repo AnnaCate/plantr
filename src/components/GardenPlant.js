@@ -54,7 +54,7 @@ const GardenPlant = ({gardenPlant, currentUser, getPlants}) => {
               <div className='level-right'>
                 <div className='level-item has-text-centered'>
                   <span className={`icon ${suitable()}`}>
-                    <span role='img' aria-label='ok emoji' className='is-size-7'>
+                    <span role='img' aria-label='ok emoji' className='is-size-6'>
                       🆗
                     </span>{' '}
                   </span>

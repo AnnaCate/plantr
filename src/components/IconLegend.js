@@ -4,7 +4,7 @@ const IconLegend = ({currentUser}) => {
   return (
     <div>
       <span className='icon'>
-        <span role='img' aria-label='ok emoji' className='is-size-7'>
+        <span role='img' aria-label='ok emoji' className='is-size-6'>
           🆗
         </span>
       </span>
